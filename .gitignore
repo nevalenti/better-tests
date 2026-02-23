@@ -1,0 +1,21 @@
+# NX
+.nx/cache
+.nx/workspace-data
+
+# Node
+node_modules
+dist
+tmp
+
+# Angular
+.angular
+
+# .NET
+**/bin
+**/obj
+**/publish
+**/.vs
+
+# Misc
+.DS_Store
+*.log
