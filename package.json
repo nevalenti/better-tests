@@ -69,15 +69,5 @@
     "typescript-eslint": "^8.40.0",
     "vitest": "^4.0.8"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "esbuild",
-      "lmdb",
-      "msgpackr-extract",
-      "nx"
-    ]
-  },
   "packageManager": "pnpm@10.28.2"
 }

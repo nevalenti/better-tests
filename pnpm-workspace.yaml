@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+
+autoInstallPeers: true
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - esbuild
+  - less
+  - lmdb
+  - msgpackr-extract
+  - nx
+  - unrs-resolver
