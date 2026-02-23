@@ -16,7 +16,8 @@
     "e2e": "nx e2e web-e2e",
     "graph": "nx graph",
     "format": "nx format:write",
-    "format:check": "nx format:check"
+    "format:check": "nx format:check",
+    "prepare": "husky"
   },
   "dependencies": {
     "@angular/animations": "~21.1.0",
@@ -61,7 +62,9 @@
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-playwright": "^1.6.2",
+    "husky": "^9.1.7",
     "jsdom": "^27.1.0",
+    "lint-staged": "^16.2.7",
     "nx": "22.5.2",
     "prettier": "~3.6.2",
     "tailwindcss": "^4.2.1",
@@ -69,5 +72,8 @@
     "typescript-eslint": "^8.40.0",
     "vitest": "^4.0.8"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.28.2",
+  "lint-staged": {
+    "*.{ts,js,html,css,scss,json,md}": "prettier --write"
+  }
 }
