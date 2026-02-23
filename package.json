@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "nx serve web",
-    "serve:api": "nx run Api:run",
-    "serve:all": "nx run-many -t serve run --projects=web,Api --parallel",
+    "serve:api": "nx run api:run",
+    "serve:all": "nx run-many -t serve run --projects=web,api --parallel",
     "build": "nx build web",
-    "build:api": "nx run Api:build",
+    "build:api": "nx run api:build",
     "build:all": "nx run-many -t build --all --parallel",
     "test": "nx test web",
     "test:all": "nx run-many -t test --all --parallel",
