@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<div class="mx-auto flex min-h-screen w-full max-w-360 flex-col">
+  <app-header />
+  <main
+    class="flex flex-1 flex-col items-center justify-start p-4 lg:pt-[12vh]"
+  >
+    <router-outlet />
+  </main>
+  <app-footer />
+</div>
