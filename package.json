@@ -10,8 +10,8 @@
     "build:api": "nx run api:build",
     "build": "nx run-many -t build --all --projects=web,api --parallel",
     "test:web": "nx test web",
-    "test:api": "nx test web",
-    "test": "nx run-many -t test --all --projects=web,api --parallel",
+    "test:api": "nx test api-tests",
+    "test": "nx run-many -t test --all --projects=web,api-tests --parallel",
     "e2e": "nx e2e web-e2e",
     "lint": "nx run-many -t lint --all --projects=web,api --parallel",
     "format": "nx format:write",
@@ -28,8 +28,7 @@
     "@angular/platform-browser": "~21.1.0",
     "@angular/router": "~21.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~21.1.0",
