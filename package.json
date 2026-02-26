@@ -5,7 +5,7 @@
   "scripts": {
     "serve:web": "nx serve web",
     "serve:api": "nx run api:run",
-    "dev": "nx run-many -t serve run --projects=web,api --parallel",
+    "dev": "nx run-many --projects=web,api --targets=serve,watch --parallel",
     "build:web": "nx build web",
     "build:api": "nx run api:build",
     "build": "nx run-many -t build --all --projects=web,api --parallel",

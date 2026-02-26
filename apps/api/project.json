@@ -5,6 +5,11 @@
       "options": {
         "args": ["--no-build", "--launch-profile", "https"]
       }
+    },
+    "watch": {
+      "options": {
+        "args": ["--launch-profile", "https"]
+      }
     }
   }
 }
