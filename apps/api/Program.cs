@@ -8,6 +8,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader()));
 
+builder.Services.AddHttpsRedirection(options => options.HttpsPort = 7289);
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
