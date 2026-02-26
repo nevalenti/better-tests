@@ -1,0 +1,28 @@
+@if (showBanner()) {
+  <div class="fixed inset-x-0 bottom-0 z-50">
+    <div class="bg-base-200 border-base-content/10 border-t p-4 shadow-lg">
+      <div
+        class="container mx-auto flex flex-col items-center justify-between gap-4 md:flex-row"
+      >
+        <div class="flex-1 text-sm">
+          <p class="font-medium">We use cookies</p>
+          <p class="text-base-content/70">
+            We use cookies to enhance your browsing experience and analyze our
+            traffic. By clicking "Accept", you consent to our use of cookies.
+            <a href="/privacy-policy" class="link link-primary ml-1"
+              >Learn more</a
+            >
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <button (click)="declineCookies()" class="btn btn-ghost btn-sm">
+            Decline
+          </button>
+          <button (click)="acceptCookies()" class="btn btn-primary btn-sm">
+            Accept
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
