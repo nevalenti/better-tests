@@ -1,0 +1,86 @@
+<app-auth-card subtitle="Create your account to get started">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="flex gap-3">
+      <div class="flex-1">
+        <label class="floating-label">
+          <span>First name</span>
+          <input
+            type="text"
+            formControlName="firstName"
+            placeholder="First name"
+            class="input input-bordered w-full"
+            [class.input-error]="firstName.invalid && firstName.touched"
+          />
+        </label>
+        @if (firstName.touched && firstName.hasError('required')) {
+          <p class="mt-1 text-xs text-error">First name is required.</p>
+        }
+      </div>
+      <div class="flex-1">
+        <label class="floating-label">
+          <span>Last name</span>
+          <input
+            type="text"
+            formControlName="lastName"
+            placeholder="Last name"
+            class="input input-bordered w-full"
+            [class.input-error]="lastName.invalid && lastName.touched"
+          />
+        </label>
+        @if (lastName.touched && lastName.hasError('required')) {
+          <p class="mt-1 text-xs text-error">Last name is required.</p>
+        }
+      </div>
+    </div>
+    <div>
+      <label class="floating-label">
+        <span>Email</span>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          class="input input-bordered w-full"
+          [class.input-error]="email.invalid && email.touched"
+        />
+      </label>
+      @if (email.touched && email.hasError('required')) {
+        <p class="mt-1 text-xs text-error">Email is required.</p>
+      } @else if (email.touched && email.hasError('email')) {
+        <p class="mt-1 text-xs text-error">
+          Please enter a valid email address.
+        </p>
+      }
+    </div>
+    <div>
+      <label class="floating-label">
+        <span>Password</span>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="input input-bordered w-full"
+          [class.input-error]="password.invalid && password.touched"
+        />
+      </label>
+      @if (password.touched && password.hasError('required')) {
+        <p class="mt-1 text-xs text-error">Password is required.</p>
+      } @else if (password.touched && password.hasError('minlength')) {
+        <p class="mt-1 text-xs text-error">
+          Password must be at least 8 characters.
+        </p>
+      }
+    </div>
+    <button type="submit" class="btn btn-primary w-full font-semibold">
+      Create account
+    </button>
+  </form>
+
+  <div class="divider text-sm opacity-50">or</div>
+
+  <app-oauth-buttons action="Sign up" />
+
+  <p class="mt-6 text-center text-sm opacity-70">
+    Already have an account?
+    <a routerLink="/login" class="link link-accent font-semibold"> Log in </a>
+  </p>
+</app-auth-card>

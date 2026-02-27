@@ -8,4 +8,13 @@ import { ThemeToggleComponent } from '../../shared/components/theme-toggle/theme
   templateUrl: 'header.component.html',
   imports: [RouterLink, ThemeToggleComponent],
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  closeMobileMenu(): void {
+    const drawerToggle = document.getElementById(
+      'mobile-nav-drawer',
+    ) as HTMLInputElement;
+    if (drawerToggle) {
+      drawerToggle.checked = false;
+    }
+  }
+}

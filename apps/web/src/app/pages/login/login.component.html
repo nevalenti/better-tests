@@ -1,0 +1,52 @@
+<app-auth-card subtitle="Log in to continue">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label class="floating-label">
+        <span>Email</span>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          class="input input-bordered w-full"
+          [class.input-error]="email.invalid && email.touched"
+        />
+      </label>
+      @if (email.touched && email.hasError('required')) {
+        <p class="mt-1 text-xs text-error">Email is required.</p>
+      } @else if (email.touched && email.hasError('email')) {
+        <p class="mt-1 text-xs text-error">
+          Please enter a valid email address.
+        </p>
+      }
+    </div>
+    <div>
+      <label class="floating-label">
+        <span>Password</span>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="input input-bordered w-full"
+          [class.input-error]="password.invalid && password.touched"
+        />
+      </label>
+      @if (password.touched && password.hasError('required')) {
+        <p class="mt-1 text-xs text-error">Password is required.</p>
+      }
+    </div>
+    <button type="submit" class="btn btn-primary w-full font-semibold">
+      Log in
+    </button>
+  </form>
+
+  <div class="divider text-sm opacity-50">or</div>
+
+  <app-oauth-buttons action="Log in" />
+
+  <p class="mt-6 text-center text-sm opacity-70">
+    Don't have an account?
+    <a routerLink="/register" class="link link-accent font-semibold">
+      Sign up
+    </a>
+  </p>
+</app-auth-card>

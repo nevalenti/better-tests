@@ -9,6 +9,20 @@
     </a>
   </div>
   <div class="navbar-end gap-2">
+    <div class="hidden lg:flex items-center gap-2">
+      <a
+        routerLink="/login"
+        routerLinkActive="active"
+        class="btn btn-ghost btn-sm"
+        >Log in</a
+      >
+      <a
+        routerLink="/register"
+        routerLinkActive="active"
+        class="btn btn-primary btn-sm"
+        >Sign up</a
+      >
+    </div>
     <label
       for="mobile-nav-drawer"
       class="btn btn-ghost btn-square lg:hidden"
@@ -42,7 +56,7 @@
       class="drawer-overlay"
     ></label>
     <div class="bg-base-100 flex min-h-full w-80 flex-col">
-      <div class="flex items-center justify-end px-4 py-3">
+      <div class="flex items-center justify-end px-2 py-1">
         <label
           for="mobile-nav-drawer"
           class="btn btn-ghost btn-square"
@@ -68,7 +82,20 @@
       <nav
         class="flex flex-1 flex-col items-center justify-start gap-4 p-6"
         aria-label="Mobile navigation"
-      ></nav>
+      >
+        <a
+          routerLink="/login"
+          class="btn btn-soft w-full max-w-xs"
+          (click)="closeMobileMenu()"
+          >Log in</a
+        >
+        <a
+          routerLink="/register"
+          class="btn btn-primary w-full max-w-xs"
+          (click)="closeMobileMenu()"
+          >Sign up</a
+        >
+      </nav>
       <div class="p-6">
         <div class="flex justify-center">
           <app-theme-toggle />
