@@ -1,0 +1,19 @@
+@if (store.hasNotifications()) {
+  <div class="toast toast-center toast-top z-999">
+    @for (notification of store.notifications(); track notification.id) {
+      <div
+        [ngClass]="getAlertClass(notification.type)"
+        class="alert flex justify-between gap-4 shadow-lg"
+      >
+        <span>{{ notification.message }}</span>
+        <button
+          (click)="store.remove(notification.id)"
+          class="btn btn-active btn-sm"
+          [ngClass]="getButtonClass(notification.type)"
+        >
+          ✕
+        </button>
+      </div>
+    }
+  </div>
+}
