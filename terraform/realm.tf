@@ -17,16 +17,20 @@ resource "keycloak_realm" "better_tests" {
   password_policy = "length(8) and specialChars(1) and upperCase(1) and digits(1)"
 
   smtp_server {
-    host = "mailhog"
-    port = 1025
-    from = "noreply@better-tests.local"
+    host              = "mailhog"
+    port              = 1025
+    from              = "noreply@better-tests.local"
+    from_display_name = "Better Tests"
+    ssl               = false
+    starttls          = false
+    reply_to          = "noreply@better-tests.local"
   }
 
   registration_allowed           = true
   registration_email_as_username = true
   reset_password_allowed         = true
   remember_me                    = false
-  verify_email                   = false
+  verify_email                   = true
   login_with_email_allowed       = true
   duplicate_emails_allowed       = false
 }
