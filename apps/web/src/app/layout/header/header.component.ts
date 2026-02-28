@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+
+import Keycloak from 'keycloak-js';
 
 import { ThemeToggleComponent } from '../../shared/components/theme-toggle/theme-toggle.component';
 
@@ -9,6 +11,8 @@ import { ThemeToggleComponent } from '../../shared/components/theme-toggle/theme
   imports: [RouterLink, ThemeToggleComponent],
 })
 export class HeaderComponent {
+  protected keycloak = inject(Keycloak);
+
   closeMobileMenu(): void {
     const drawerToggle = document.getElementById(
       'mobile-nav-drawer',
@@ -16,5 +20,17 @@ export class HeaderComponent {
     if (drawerToggle) {
       drawerToggle.checked = false;
     }
+  }
+
+  login(): void {
+    this.keycloak.login();
+  }
+
+  register(): void {
+    this.keycloak.register();
+  }
+
+  logout(): void {
+    this.keycloak.logout({ redirectUri: window.location.origin });
   }
 }

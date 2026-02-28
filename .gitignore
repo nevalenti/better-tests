@@ -1,6 +1,19 @@
-# NX
-.nx/cache
-.nx/workspace-data
+# Editor
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env*
+!.env.example
+
+# .NET
+**/bin
+**/obj
+**/publish
+**/.vs
 
 # Node
 node_modules
@@ -10,15 +23,19 @@ tmp
 # Angular
 .angular
 
-# .NET
-**/bin
-**/obj
-**/publish
-**/.vs
+# NX
+.nx/cache
+.nx/workspace-data
 
 # Misc
-.DS_Store
 *.log
 
 # Certificates
-apps/api/certs/
+certs/
+
+# Terraform
+.terraform/
+terraform.tfvars
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup

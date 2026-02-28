@@ -10,18 +10,15 @@
   </div>
   <div class="navbar-end gap-2">
     <div class="hidden lg:flex items-center gap-2">
-      <a
-        routerLink="/login"
-        routerLinkActive="active"
-        class="btn btn-ghost btn-sm"
-        >Log in</a
-      >
-      <a
-        routerLink="/register"
-        routerLinkActive="active"
-        class="btn btn-primary btn-sm"
-        >Sign up</a
-      >
+      @if (keycloak.authenticated) {
+        <span class="text-sm">{{ keycloak.profile?.username }}</span>
+        <button (click)="logout()" class="btn btn-soft btn-sm">Log out</button>
+      } @else {
+        <button (click)="login()" class="btn btn-ghost btn-sm">Log in</button>
+        <button (click)="register()" class="btn btn-primary btn-sm">
+          Sign up
+        </button>
+      }
     </div>
     <label
       for="mobile-nav-drawer"
@@ -83,18 +80,30 @@
         class="flex flex-1 flex-col items-center justify-start gap-4 p-6"
         aria-label="Mobile navigation"
       >
-        <a
-          routerLink="/login"
-          class="btn btn-soft w-full max-w-xs"
-          (click)="closeMobileMenu()"
-          >Log in</a
-        >
-        <a
-          routerLink="/register"
-          class="btn btn-primary w-full max-w-xs"
-          (click)="closeMobileMenu()"
-          >Sign up</a
-        >
+        @if (keycloak.authenticated) {
+          <div class="w-full max-w-xs text-center">
+            <p class="text-sm mb-4">{{ keycloak.profile?.username }}</p>
+            <button
+              (click)="logout(); closeMobileMenu()"
+              class="btn btn-soft w-full"
+            >
+              Log out
+            </button>
+          </div>
+        } @else {
+          <button
+            (click)="login(); closeMobileMenu()"
+            class="btn btn-soft w-full max-w-xs"
+          >
+            Log in
+          </button>
+          <button
+            (click)="register(); closeMobileMenu()"
+            class="btn btn-primary w-full max-w-xs"
+          >
+            Sign up
+          </button>
+        }
       </nav>
       <div class="p-6">
         <div class="flex justify-center">

@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
+import Keycloak from 'keycloak-js';
+
 import { AuthCardComponent } from '../../shared/components/auth-card/auth-card.component';
 import { OAuthButtonsComponent } from '../../shared/components/oauth-buttons/oauth-buttons.component';
 
@@ -22,6 +24,7 @@ import { OAuthButtonsComponent } from '../../shared/components/oauth-buttons/oau
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly keycloak = inject(Keycloak);
 
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -40,5 +43,6 @@ export class LoginComponent {
       this.form.markAllAsTouched();
       return;
     }
+    this.keycloak.login();
   }
 }

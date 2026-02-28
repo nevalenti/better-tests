@@ -1,0 +1,25 @@
+# Keycloak Configuration
+keycloak_url              = "http://localhost:8080"
+keycloak_admin_username   = "admin"
+keycloak_admin_password   = "admin"
+keycloak_admin_client_id  = "admin-cli"
+
+# Realm Configuration
+realm_name = "better-tests"
+
+# Client Configuration
+api_client_id = "api"
+web_client_id = "web"
+
+web_redirect_uris = ["http://localhost:4200/*"]
+api_redirect_uris = ["http://localhost:5048/*"]
+
+# Test Users
+test_users = {
+  "administrator" = {
+    email      = "administrator@example.com"
+    first_name = "Administrator"
+    last_name  = "User"
+    password   = "ChangeMe!"
+  }
+}
