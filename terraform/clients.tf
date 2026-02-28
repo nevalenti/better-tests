@@ -1,4 +1,4 @@
-resource "keycloak_openid_client" "api" {
+resource "keycloak_openid_client" "better-tests-api" {
   realm_id              = keycloak_realm.better_tests.id
   client_id             = var.api_client_id
   name                  = "API Client"
@@ -9,7 +9,7 @@ resource "keycloak_openid_client" "api" {
   depends_on = [keycloak_realm.better_tests]
 }
 
-resource "keycloak_openid_client" "web" {
+resource "keycloak_openid_client" "better-tests-web" {
   realm_id                     = keycloak_realm.better_tests.id
   client_id                    = var.web_client_id
   name                         = "Web Application"
@@ -28,20 +28,20 @@ resource "keycloak_openid_client" "web" {
 
 resource "keycloak_openid_client_default_scopes" "web_default_scopes" {
   realm_id  = keycloak_realm.better_tests.id
-  client_id = keycloak_openid_client.web.id
+  client_id = keycloak_openid_client.better-tests-web.id
   default_scopes = [
     "profile",
     "email"
   ]
 
-  depends_on = [keycloak_openid_client.web]
+  depends_on = [keycloak_openid_client.better-tests-web]
 }
 
 resource "keycloak_generic_role_mapper" "web_roles" {
   realm_id  = keycloak_realm.better_tests.id
-  client_id = keycloak_openid_client.web.id
+  client_id = keycloak_openid_client.better-tests-web.id
 
   role_id = keycloak_role.user.id
 
-  depends_on = [keycloak_openid_client.web, keycloak_role.user]
+  depends_on = [keycloak_openid_client.better-tests-web, keycloak_role.user]
 }

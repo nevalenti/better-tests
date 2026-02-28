@@ -5,17 +5,17 @@ output "realm_id" {
 
 output "api_client_id" {
   description = "API client ID"
-  value       = keycloak_openid_client.api.client_id
+  value       = keycloak_openid_client.better-tests-api.client_id
 }
 
 output "web_client_id" {
   description = "Web client ID"
-  value       = keycloak_openid_client.web.client_id
+  value       = keycloak_openid_client.better-tests-web.client_id
 }
 
 output "web_client_secret" {
   description = "Web client secret"
-  value       = keycloak_openid_client.web.client_secret
+  value       = keycloak_openid_client.better-tests-web.client_secret
   sensitive   = true
 }
 

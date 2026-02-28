@@ -32,13 +32,13 @@ variable "realm_name" {
 variable "api_client_id" {
   description = "API client ID"
   type        = string
-  default     = "api"
+  default     = "better-reads-api"
 }
 
 variable "web_client_id" {
   description = "Web application client ID"
   type        = string
-  default     = "web"
+  default     = "better-reads-web"
 }
 
 variable "web_redirect_uris" {

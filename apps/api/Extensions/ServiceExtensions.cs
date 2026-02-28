@@ -20,7 +20,7 @@ public static class ServiceExtensions
         var keycloak = configuration.GetSection("Keycloak");
         var url = keycloak["Url"] ?? "http://localhost:8080";
         var realm = keycloak["Realm"] ?? "better-tests";
-        var clientId = keycloak["ClientId"] ?? "api";
+        var clientId = keycloak["ClientId"] ?? "better-reads-api";
         var authority = $"{url}/realms/{realm}";
 
         return services.AddAuthentication(options =>

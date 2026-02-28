@@ -4,8 +4,8 @@ keycloak_admin_password     = "admin"
 keycloak_admin_client_id    = "admin-cli"
 
 realm_name        = "better-tests"
-api_client_id     = "api"
-web_client_id     = "web"
+api_client_id     = "better-reads-api"
+web_client_id     = "better-reads-web"
 web_redirect_uris = ["http://localhost:4200/*"]
 web_origins       = ["http://localhost:4200"]
 api_redirect_uris = ["http://localhost:5048/*"]
