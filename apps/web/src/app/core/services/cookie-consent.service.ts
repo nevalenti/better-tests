@@ -1,11 +1,20 @@
-import { afterNextRender, computed, Injectable, signal } from '@angular/core';
+import {
+  afterNextRender,
+  computed,
+  Injectable,
+  inject,
+  signal,
+} from '@angular/core';
+
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CookieConsentService {
-  private readonly CONSENT_STORAGE_KEY = 'cookies-consent';
+  private readonly CONSENT_COOKIE_KEY = 'cookies-consent';
 
+  private cookieService = inject(CookieService);
   private consentStatusSignal = signal<boolean | null>(null);
 
   consentStatus = this.consentStatusSignal.asReadonly();
@@ -21,7 +30,7 @@ export class CookieConsentService {
 
   private getStoredConsent(): boolean | null {
     try {
-      const stored = localStorage.getItem(this.CONSENT_STORAGE_KEY);
+      const stored = this.cookieService.getCookie(this.CONSENT_COOKIE_KEY);
       return stored ? JSON.parse(stored) : null;
     } catch (error) {
       console.error('Error reading cookie consent:', error);
@@ -31,7 +40,10 @@ export class CookieConsentService {
 
   acceptCookies(): void {
     try {
-      localStorage.setItem(this.CONSENT_STORAGE_KEY, JSON.stringify(true));
+      this.cookieService.setCookie(
+        this.CONSENT_COOKIE_KEY,
+        JSON.stringify(true),
+      );
       this.consentStatusSignal.set(true);
     } catch (error) {
       console.error('Error saving cookie consent:', error);
@@ -40,7 +52,10 @@ export class CookieConsentService {
 
   declineCookies(): void {
     try {
-      localStorage.setItem(this.CONSENT_STORAGE_KEY, JSON.stringify(false));
+      this.cookieService.setCookie(
+        this.CONSENT_COOKIE_KEY,
+        JSON.stringify(false),
+      );
       this.consentStatusSignal.set(false);
     } catch (error) {
       console.error('Error saving cookie consent:', error);
@@ -49,7 +64,7 @@ export class CookieConsentService {
 
   resetConsent(): void {
     try {
-      localStorage.removeItem(this.CONSENT_STORAGE_KEY);
+      this.cookieService.removeCookie(this.CONSENT_COOKIE_KEY);
       this.consentStatusSignal.set(null);
     } catch (error) {
       console.error('Error removing cookie consent:', error);

@@ -1,11 +1,12 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=displayMessage displayRequiredFields=false>
-  <div class="card from-base-100 to-base-200/30 border-base-content/10 w-full max-w-md rounded-lg border bg-linear-to-b shadow-lg">
-    <div class="card-body px-8 py-12">
-      <div class="mb-8">
+  <div class="card from-base-100 to-base-200/30 border-base-content/10 w-full rounded-lg border bg-linear-to-b shadow-lg">
+    <div class="card-body px-6 py-8 sm:px-8 sm:py-10">
+      <div class="mb-6">
         <h1 class="text-center">
-          <span class="text-base-content text-4xl font-extrabold whitespace-nowrap" style="font-family: var(--font-display)">Better Tests</span>
+          <span class="text-base-content text-3xl font-extrabold whitespace-nowrap" style="font-family: var(--font-display)">Welcome Back</span>
         </h1>
+        <p class="text-center text-sm text-base-content/60 mt-2">Log in to your account</p>
       </div>
 
       <#if message??>
@@ -15,9 +16,9 @@
         </div>
       </#if>
 
-      <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post" class="space-y-6">
+      <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post" class="space-y-4">
         <div class="form-group">
-          <label for="username" class="block text-xs font-semibold mb-2 text-base-content">Email Address</label>
+          <label for="username" class="block text-sm font-semibold mb-2.5 text-base-content">Email Address</label>
           <div class="relative">
             <input
               id="username"
@@ -27,14 +28,14 @@
               autofocus
               autocomplete="username"
               placeholder="john@example.com"
-              class="input input-bordered w-full text-sm focus:input-primary transition-colors"
+              class="input input-bordered w-full h-12 text-sm focus:input-primary transition-colors"
             />
-            <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="password" class="block text-xs font-semibold mb-2 text-base-content">Password</label>
+          <label for="password" class="block text-sm font-semibold mb-2.5 text-base-content">Password</label>
           <div class="relative">
             <input
               id="password"
@@ -42,14 +43,14 @@
               type="password"
               autocomplete="current-password"
               placeholder="••••••••"
-              class="input input-bordered w-full text-sm focus:input-primary transition-colors pr-10"
+              class="input input-bordered w-full h-12 text-sm focus:input-primary transition-colors pr-12"
             />
-            <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg>
+            <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg>
           </div>
         </div>
 
         <#if realm.rememberMe>
-          <div class="flex items-center gap-3 py-2">
+          <div class="flex items-center gap-3 pt-1">
             <input
               id="rememberMe"
               name="rememberMe"
@@ -57,7 +58,7 @@
               value="on"
               class="checkbox checkbox-sm"
             />
-            <label for="rememberMe" class="label-text text-xs cursor-pointer">Keep me logged in</label>
+            <label for="rememberMe" class="label-text text-sm cursor-pointer">Keep me logged in</label>
           </div>
         </#if>
 
@@ -66,21 +67,21 @@
           name="login"
           type="submit"
           value="Sign In"
-          class="btn btn-primary w-full font-semibold text-sm mt-8 hover:shadow-lg transition-all duration-200"
+          class="btn btn-primary w-full h-12 font-semibold text-base mt-6 hover:shadow-lg transition-all duration-200"
         >
           Log in
         </button>
       </form>
 
-      <div class="divider my-6">OR</div>
+      <div class="divider my-6"></div>
 
-      <div class="space-y-3">
+      <div class="space-y-2.5">
         <#if social?? && social.providers??>
           <#list social.providers as provider>
             <#if provider.alias == 'google'>
               <a
                 href="${provider.loginUrl}"
-                class="btn btn-soft h-11 w-full justify-center gap-3 text-[15px] font-medium transition-all duration-200 hover:shadow-md"
+                class="btn btn-soft h-12 w-full justify-center gap-2.5 text-sm font-medium transition-all duration-200 hover:shadow-md"
               >
                 <svg class="size-5" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -88,18 +89,18 @@
                   <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                   <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                 </svg>
-                Log in with Google
+                Continue with Google
               </a>
             </#if>
             <#if provider.alias == 'github'>
               <a
                 href="${provider.loginUrl}"
-                class="btn btn-soft h-11 w-full justify-center gap-3 text-[15px] font-medium transition-all duration-200 hover:shadow-md"
+                class="btn btn-soft h-12 w-full justify-center gap-2.5 text-sm font-medium transition-all duration-200 hover:shadow-md"
               >
                 <svg class="size-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
-                Log in with GitHub
+                Continue with GitHub
               </a>
             </#if>
           </#list>
@@ -107,10 +108,10 @@
       </div>
 
       <#if realm.password && realm.registrationAllowed && !usernameEditDisabled??>
-        <p class="text-center text-sm mt-6">
+        <p class="text-center text-sm text-base-content/70 mt-7">
           Don't have an account?
           <a href="${url.registrationUrl}" class="link link-accent font-semibold">
-            Sign up
+            Create one
           </a>
         </p>
       </#if>

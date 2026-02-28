@@ -136,10 +136,33 @@
       }
     </style>
     <script>
+      const THEME_KEY = 'app-theme';
+      const LIGHT_THEME = 'emerald';
+      const DARK_THEME = 'dim';
+
+      function getCookie(name) {
+        const nameEQ = name + '=';
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+          cookie = cookie.trim();
+          if (cookie.indexOf(nameEQ) === 0) {
+            return cookie.substring(nameEQ.length);
+          }
+        }
+        return null;
+      }
+
+      function setCookie(name, value, days = 365) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        const expires = 'expires=' + date.toUTCString();
+        document.cookie = name + '=' + value + ';' + expires + ';path=/;domain=localhost';
+      }
+
       function initTheme() {
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = getCookie(THEME_KEY);
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme || (prefersDark ? 'dim' : 'emerald');
+        const theme = savedTheme || (prefersDark ? DARK_THEME : LIGHT_THEME);
         document.documentElement.setAttribute('data-theme', theme);
         updateThemeIcon(theme);
       }
@@ -148,7 +171,7 @@
         const sunIcon = document.getElementById('theme-sun');
         const moonIcon = document.getElementById('theme-moon');
         if (sunIcon && moonIcon) {
-          if (theme === 'dim') {
+          if (theme === DARK_THEME) {
             moonIcon.style.display = 'none';
             sunIcon.style.display = 'block';
           } else {
@@ -160,9 +183,9 @@
 
       function toggleTheme() {
         const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dim' ? 'emerald' : 'dim';
+        const newTheme = currentTheme === DARK_THEME ? LIGHT_THEME : DARK_THEME;
         document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+        setCookie(THEME_KEY, newTheme);
         updateThemeIcon(newTheme);
       }
 
