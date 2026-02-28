@@ -68,3 +68,31 @@ variable "test_users" {
     password   = string
   }))
 }
+
+variable "google_client_id" {
+  description = "Google OAuth 2.0 Client ID"
+  type        = string
+  default     = ""
+  sensitive   = false
+}
+
+variable "google_client_secret" {
+  description = "Google OAuth 2.0 Client Secret"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "github_client_id" {
+  description = "GitHub OAuth App Client ID"
+  type        = string
+  default     = ""
+  sensitive   = false
+}
+
+variable "github_client_secret" {
+  description = "GitHub OAuth App Client Secret"
+  type        = string
+  default     = ""
+  sensitive   = true
+}

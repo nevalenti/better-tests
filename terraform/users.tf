@@ -30,4 +30,3 @@ resource "keycloak_user_roles" "admin_user_roles" {
 
   depends_on = [keycloak_user.test_users, keycloak_role.admin, keycloak_role.user]
 }
-
