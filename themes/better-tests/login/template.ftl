@@ -1,6 +1,6 @@
 <#macro registrationLayout displayMessage=false displayRequiredFields=false pageTitle="Keycloak">
   <!DOCTYPE html>
-  <html lang="en" data-theme="emerald">
+  <html lang="en" data-theme="dim">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -199,7 +199,7 @@
         <div class="navbar-start">
           <a
             href="http://localhost:4200"
-            class="text-base-content text-xl font-extrabold whitespace-nowrap shrink-0 transition-opacity hover:opacity-60"
+            class="text-primary text-xl font-extrabold whitespace-nowrap shrink-0 transition-opacity hover:opacity-60"
             style="font-family: var(--font-display)"
           >
             Better Tests
@@ -208,7 +208,7 @@
         <div class="navbar-end gap-2">
           <a href="${url.loginUrl}" class="btn btn-ghost btn-sm">Log in</a>
           <#if realm.registrationAllowed>
-            <a href="${url.registrationUrl}" class="btn btn-primary btn-sm">Sign up</a>
+            <a href="${url.registrationUrl}" class="btn btn-accent btn-sm">Sign up</a>
           </#if>
         </div>
       </nav>
@@ -221,7 +221,7 @@
 
       <footer class="footer footer-center text-base-content border-base-content/10 border-t p-4 sm:p-6 relative">
         <aside class="text-center text-sm w-full">
-          <p class="text-sm font-extrabold" style="font-family: var(--font-display)">
+          <p class="text-primary text-sm font-extrabold" style="font-family: var(--font-display)">
             Better Tests
           </p>
           <p class="text-xs">Copyright © 2026 - All rights reserved</p>
