@@ -1,0 +1,7 @@
+# Gitleaks ignore file
+# Add false positives here in the format: <commit_hash>:<file>:<rule_id>:<line>
+# Example: fa41040893b62064f42edbade24474d565aaa8de:terraform/terraform.tfvars.example:keycloak-secrets:29
+
+# Empty placeholder OAuth client secrets in example file (intentionally empty)
+fa41040893b62064f42edbade24474d565aaa8de:terraform/terraform.tfvars.example:keycloak-secrets:29
+fa41040893b62064f42edbade24474d565aaa8de:terraform/terraform.tfvars.example:keycloak-secrets:32

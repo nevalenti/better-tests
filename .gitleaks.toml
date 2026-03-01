@@ -1,0 +1,75 @@
+# Gitleaks configuration for better-tests project
+# Detects secrets like API keys, tokens, passwords, etc.
+
+[build]
+# Verbosity level (DEBUG, INFO, WARN, ERROR)
+log-level = "INFO"
+
+# Number of goroutines to use for scanning
+concurrency = 1
+
+# Maximum depth for recursive scanning
+max-target-megabytes = 2048
+
+[source]
+# Paths to exclude from scanning
+exclude-paths = [
+  "node_modules/",
+  ".angular/",
+  "dist/",
+  "bin/",
+  "obj/",
+  ".terraform/",
+  ".git/",
+  "*.tfstate",
+  "*.tfstate.backup"
+]
+
+# File globs to exclude
+exclude-sources = [
+  "git history",
+  "files"
+]
+
+[whitelist]
+# Paths to exclude from scanning (alternative format)
+paths = []
+
+# Regexes to exclude from scanning
+regexes = [
+  # Allow test data with obviously fake credentials
+  "(?i)(test|mock|fake|demo).*password",
+  # Allow environment examples
+  "\\.env\\.example"
+]
+
+[[rules]]
+id = "env-vars"
+description = "Detect common environment variable patterns"
+regex = '''(?i)(api_?key|token|secret|password|auth|credential)[\s]*=[\s]*['"](.*?)['"]'''
+entropy = 3.5
+keywords = ["api", "key", "secret", "password", "token"]
+
+[[rules]]
+id = "aws-keys"
+description = "AWS Access Key IDs and Secret Access Keys"
+regex = '''(AKIA[0-9A-Z]{16}|aws_access_key_id|aws_secret_access_key)'''
+keywords = ["aws", "access", "key", "secret"]
+
+[[rules]]
+id = "jwt-tokens"
+description = "JWT tokens (Bearer tokens)"
+regex = '''Bearer\s+[A-Za-z0-9\-_\.]+'''
+entropy = 4.0
+
+[[rules]]
+id = "private-keys"
+description = "Private key patterns"
+regex = '''-----BEGIN (RSA|DSA|EC|PGP|OPENSSH) PRIVATE KEY-----'''
+keywords = ["private", "key", "begin"]
+
+[[rules]]
+id = "keycloak-secrets"
+description = "Keycloak client secrets and credentials"
+regex = '''(?i)(keycloak.*secret|client.*secret)[\s]*[:=][\s]*['"](.*?)['"]'''
+keywords = ["keycloak", "secret", "client"]

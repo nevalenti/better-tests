@@ -17,6 +17,8 @@
     "format": "nx format:write",
     "format:check": "nx format:check",
     "graph": "nx graph",
+    "secrets:check": "gitleaks detect --source . --verbose",
+    "secrets:check:staged": "gitleaks protect --staged",
     "prepare": "husky"
   },
   "dependencies": {
