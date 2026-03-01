@@ -1,5 +1,5 @@
 <#import "template.ftl" as layout>
-<@layout.registrationLayout displayMessage=displayMessage displayRequiredFields=false>
+<@layout.registrationLayout displayMessage=displayMessage displayRequiredFields=false pageTitle="Better Tests - Log in">
   <div class="card from-base-100 to-base-200/30 border-base-content/10 w-full rounded-lg border bg-linear-to-b shadow-lg">
     <div class="card-body px-6 py-8 sm:px-8 sm:py-10">
       <div class="mb-6">
@@ -27,7 +27,7 @@
               type="text"
               autofocus
               autocomplete="username"
-              placeholder="john@example.com"
+              placeholder="john.doe@example.com"
               class="input input-bordered w-full h-12 text-sm focus:input-primary transition-colors"
             />
             <svg class="absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 opacity-40 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>

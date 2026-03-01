@@ -1,4 +1,4 @@
-<#macro registrationLayout displayMessage=false displayRequiredFields=false>
+<#macro registrationLayout displayMessage=false displayRequiredFields=false pageTitle="Keycloak">
   <!DOCTYPE html>
   <html lang="en" data-theme="emerald">
   <head>
@@ -212,7 +212,7 @@
         </div>
       </nav>
 
-      <main class="flex flex-1 flex-col items-center justify-start p-4 lg:pt-[12vh]">
+      <main class="flex flex-1 flex-col items-center justify-start p-4 lg:pt-[8vh]">
         <div class="w-full max-w-sm">
           <#nested "header">
         </div>
