@@ -7,7 +7,7 @@ builder.Services
     .AddOpenApi()
     .AddCors(options =>
         options.AddDefaultPolicy(policy =>
-            policy.WithOrigins("http://localhost:4200")
+            policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()))

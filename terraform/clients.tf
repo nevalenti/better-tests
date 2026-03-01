@@ -37,6 +37,21 @@ resource "keycloak_openid_client_default_scopes" "web_default_scopes" {
   depends_on = [keycloak_openid_client.better-tests-web]
 }
 
+resource "keycloak_generic_protocol_mapper" "api_audience_mapper" {
+  realm_id        = keycloak_realm.better_tests.id
+  client_id       = keycloak_openid_client.better-tests-web.id
+  name            = "api-audience-mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-audience-mapper"
+  config = {
+    "included.client.audience"  = var.api_client_id
+    "access.token.claim"        = "true"
+    "introspection.token.claim" = "true"
+  }
+
+  depends_on = [keycloak_openid_client.better-tests-web]
+}
+
 resource "keycloak_generic_role_mapper" "web_roles" {
   realm_id  = keycloak_realm.better_tests.id
   client_id = keycloak_openid_client.better-tests-web.id
