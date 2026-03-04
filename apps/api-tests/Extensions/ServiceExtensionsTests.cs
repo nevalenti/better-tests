@@ -1,10 +1,11 @@
-using Api.Extensions;
+using BetterTests.Infrastructure.Persistence;
+using BetterTests.Presentation.Extensions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 using Moq;
+using Xunit;
 
 namespace Api.Tests.Extensions;
 
@@ -30,7 +31,7 @@ public class ServiceExtensionsTests
     }
 
     [Fact]
-    public void AddDatabase_ConfiguresPostgresConnection()
+    public void AddDatabase_RegistersAppDbContextAndAllowsResolution()
     {
         var services = new ServiceCollection();
         var config = new ConfigurationBuilder()
@@ -42,9 +43,9 @@ public class ServiceExtensionsTests
 
         services.AddDatabase(config);
 
-        var descriptor = services.FirstOrDefault(s =>
-            s.ServiceType == typeof(Microsoft.EntityFrameworkCore.DbContextOptions<AppDbContext>));
+        var serviceProvider = services.BuildServiceProvider();
+        var dbContext = serviceProvider.GetService<AppDbContext>();
 
-        descriptor.Should().NotBeNull("DbContext should be registered");
+        dbContext.Should().NotBeNull("AppDbContext should be resolvable from the service provider");
     }
 }

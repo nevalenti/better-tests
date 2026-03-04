@@ -30,6 +30,7 @@ resource "keycloak_openid_client_default_scopes" "web_default_scopes" {
   realm_id  = keycloak_realm.better_tests.id
   client_id = keycloak_openid_client.better-tests-web.id
   default_scopes = [
+    "openid",
     "profile",
     "email"
   ]
@@ -46,6 +47,78 @@ resource "keycloak_generic_protocol_mapper" "api_audience_mapper" {
   config = {
     "included.client.audience"  = var.api_client_id
     "access.token.claim"        = "true"
+    "introspection.token.claim" = "true"
+  }
+
+  depends_on = [keycloak_openid_client.better-tests-web]
+}
+
+resource "keycloak_generic_protocol_mapper" "subject_claim_mapper" {
+  realm_id        = keycloak_realm.better_tests.id
+  client_id       = keycloak_openid_client.better-tests-web.id
+  name            = "subject-claim-mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usermodel-property-mapper"
+  config = {
+    "user.attribute"           = "username"
+    "claim.name"               = "sub"
+    "access.token.claim"       = "true"
+    "id.token.claim"           = "true"
+    "userinfo.token.claim"     = "true"
+    "introspection.token.claim" = "true"
+  }
+
+  depends_on = [keycloak_openid_client.better-tests-web]
+}
+
+resource "keycloak_generic_protocol_mapper" "email_mapper" {
+  realm_id        = keycloak_realm.better_tests.id
+  client_id       = keycloak_openid_client.better-tests-web.id
+  name            = "email-mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usermodel-property-mapper"
+  config = {
+    "usermodel.property.name"  = "email"
+    "claim.name"               = "email"
+    "access.token.claim"       = "true"
+    "id.token.claim"           = "true"
+    "userinfo.token.claim"     = "true"
+    "introspection.token.claim" = "true"
+  }
+
+  depends_on = [keycloak_openid_client.better-tests-web]
+}
+
+resource "keycloak_generic_protocol_mapper" "given_name_mapper" {
+  realm_id        = keycloak_realm.better_tests.id
+  client_id       = keycloak_openid_client.better-tests-web.id
+  name            = "given-name-mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usermodel-property-mapper"
+  config = {
+    "usermodel.property.name"  = "firstName"
+    "claim.name"               = "given_name"
+    "access.token.claim"       = "true"
+    "id.token.claim"           = "true"
+    "userinfo.token.claim"     = "true"
+    "introspection.token.claim" = "true"
+  }
+
+  depends_on = [keycloak_openid_client.better-tests-web]
+}
+
+resource "keycloak_generic_protocol_mapper" "family_name_mapper" {
+  realm_id        = keycloak_realm.better_tests.id
+  client_id       = keycloak_openid_client.better-tests-web.id
+  name            = "family-name-mapper"
+  protocol        = "openid-connect"
+  protocol_mapper = "oidc-usermodel-property-mapper"
+  config = {
+    "usermodel.property.name"  = "lastName"
+    "claim.name"               = "family_name"
+    "access.token.claim"       = "true"
+    "id.token.claim"           = "true"
+    "userinfo.token.claim"     = "true"
     "introspection.token.claim" = "true"
   }
 

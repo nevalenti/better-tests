@@ -1,37 +1,30 @@
-using Api.Extensions;
+using BetterTests.Presentation.Extensions;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.Console()
+    .WriteTo.File("logs/api-.logs", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
-builder.Services
-    .AddDatabase(builder.Configuration)
-    .AddOpenApi()
-    .AddCors(options =>
-        options.AddDefaultPolicy(policy =>
-            policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials()))
-    .AddKeycloakAuth(builder.Configuration, builder.Environment)
-    .AddAuthorizationBuilder()
-        .AddDefaultPolicy("AuthenticatedUsers", policy =>
-            policy.RequireAuthenticatedUser());
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpsRedirection(options => options.HttpsPort = 7289);
-builder.Services.AddHealthChecks();
+    builder.Host.UseSerilog();
 
-var app = builder.Build();
+    builder.Services.ConfigureApplicationServices(builder.Configuration, builder.Environment);
 
-if (app.Environment.IsDevelopment())
-    app.MapOpenApi();
+    var app = builder.Build();
+    app.ConfigureApplicationPipeline();
 
-app.UseCors();
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapHealthChecks("/healthz");
-app.MapUserEndpoints();
-
-app.Run();
-
-public partial class Program { }
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

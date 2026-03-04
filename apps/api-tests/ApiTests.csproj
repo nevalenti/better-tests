@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
     <PackageReference Include="coverlet.collector">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="FluentValidation" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -23,6 +26,9 @@
 
   <ItemGroup>
     <ProjectReference Include="../api/Api.csproj" />
+    <ProjectReference Include="../api/Domain/BetterTests.Domain.csproj" />
+    <ProjectReference Include="../api/Application/BetterTests.Application.csproj" />
+    <ProjectReference Include="../api/Infrastructure/BetterTests.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

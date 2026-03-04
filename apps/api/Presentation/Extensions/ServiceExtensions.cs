@@ -1,16 +1,26 @@
+using BetterTests.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Api.Extensions;
+namespace BetterTests.Presentation.Extensions;
 
 public static class ServiceExtensions
 {
     public static IServiceCollection AddDatabase(
         this IServiceCollection services,
-        IConfiguration configuration) =>
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        IConfiguration configuration)
+    {
+        var useInMemory = configuration.GetValue<bool>("UseInMemoryDatabase");
+
+        return services.AddDbContext<AppDbContext>(options =>
+        {
+            if (useInMemory)
+                options.UseInMemoryDatabase("InMemoryDbForTesting");
+            else
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+        });
+    }
 
     public static IServiceCollection AddKeycloakAuth(
         this IServiceCollection services,
@@ -34,12 +44,17 @@ public static class ServiceExtensions
             options.Audience = clientId;
             options.MetadataAddress = $"{authority}/.well-known/openid-configuration";
             options.RequireHttpsMetadata = environment.IsProduction();
+            options.MapInboundClaims = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
+                ValidIssuer = authority,
                 ValidateAudience = true,
+                ValidAudience = clientId,
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
+                ClockSkew = TimeSpan.FromSeconds(10),
+                NameClaimType = "preferred_username",
+                RoleClaimType = "realm_access"
             };
         })
         .Services;

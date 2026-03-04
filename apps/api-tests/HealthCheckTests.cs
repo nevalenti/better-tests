@@ -1,13 +1,14 @@
 using System.Net;
+using Api.Tests.Fixtures;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace ApiTests
+namespace Api.Tests
 {
-    public class HealthCheckTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
+    [Collection("Sequential")]
+    public class HealthCheckTests(ApiWebApplicationFactory factory) : IClassFixture<ApiWebApplicationFactory>
     {
-        private readonly WebApplicationFactory<Program> _factory = factory;
+        private readonly ApiWebApplicationFactory _factory = factory;
 
         [Fact]
         public async Task HealthCheck_Should_Return_Healthy()

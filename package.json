@@ -17,6 +17,7 @@
     "format": "nx format:write",
     "format:check": "nx format:check",
     "graph": "nx graph",
+    "db:migrate": "dotnet ef database update --project apps/api/Infrastructure/BetterTests.Infrastructure.csproj --startup-project apps/api/Api.csproj",
     "secrets:check": "gitleaks detect --source . --verbose",
     "secrets:check:staged": "gitleaks protect --staged",
     "prepare": "husky"

@@ -114,8 +114,35 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Run API tests
-        run: dotnet test apps/api-tests/ApiTests.csproj --logger "console;verbosity=normal"
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/Directory.Packages.props') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Install Entity Framework Core tools
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Validate migrations
+        run: dotnet ef migrations has-pending-model-changes --project apps/api/Infrastructure/BetterTests.Infrastructure.csproj --startup-project apps/api/Api.csproj
+        env:
+          ConnectionStrings__DefaultConnection: 'Server=localhost;Database=postgres;User ID=postgres;Password=postgres;'
+
+      - name: Run API tests with coverage
+        run: dotnet test apps/api-tests/ApiTests.csproj --collect:"XPlat Code Coverage" --results-directory ./coverage --logger "console;verbosity=normal"
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-coverage
+          path: coverage/
+          retention-days: 7
 
   build:
     name: Build
