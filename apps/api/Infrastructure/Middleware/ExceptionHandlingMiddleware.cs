@@ -31,6 +31,9 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
             return Task.CompletedTask;
 
         context.Response.ContentType = "application/problem+json";
+        context.Response.Headers.CacheControl = "no-cache, no-store, must-revalidate";
+        context.Response.Headers.Pragma = "no-cache";
+        context.Response.Headers.Expires = "0";
 
         var problemDetails = new ProblemDetailsResponse
         {

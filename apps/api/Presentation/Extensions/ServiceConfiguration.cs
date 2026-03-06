@@ -46,7 +46,14 @@ public static class ServiceConfiguration
                 policy.WithOrigins(allowedOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials()));
+                    .AllowCredentials()
+                    .WithExposedHeaders(
+                        "Content-Type",
+                        "Content-Length",
+                        "X-Content-Type-Options",
+                        "Cache-Control",
+                        "Pragma",
+                        "Expires")));
 
         var rateLimitConfig = configuration.GetSection("RateLimiting");
         var permitLimit = rateLimitConfig.GetValue("PermitLimit", 100);

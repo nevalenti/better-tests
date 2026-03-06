@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BetterTests.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260304160927_CreateInitialSchema")]
+    [Migration("20260306215915_CreateInitialSchema")]
     partial class CreateInitialSchema
     {
         /// <inheritdoc />
@@ -215,7 +215,7 @@ namespace BetterTests.Infrastructure.Migrations
                     b.HasIndex("TestRunId", "TestCaseId")
                         .IsUnique()
                         .HasDatabaseName("ix_test_results_run_id_case_id_unique")
-                        .HasFilter("[TestCaseId] IS NOT NULL");
+                        .HasFilter("\"TestCaseId\" IS NOT NULL");
 
                     b.ToTable("test_results", (string)null);
                 });

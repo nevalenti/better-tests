@@ -212,7 +212,7 @@ namespace BetterTests.Infrastructure.Migrations
                     b.HasIndex("TestRunId", "TestCaseId")
                         .IsUnique()
                         .HasDatabaseName("ix_test_results_run_id_case_id_unique")
-                        .HasFilter("[TestCaseId] IS NOT NULL");
+                        .HasFilter("\"TestCaseId\" IS NOT NULL");
 
                     b.ToTable("test_results", (string)null);
                 });

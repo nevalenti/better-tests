@@ -14,6 +14,7 @@ import {
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
+import { httpErrorInterceptor } from './core/http-error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,7 +40,9 @@ export const appConfig: ApplicationConfig = {
         },
       ],
     },
-    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    provideHttpClient(
+      withInterceptors([includeBearerTokenInterceptor, httpErrorInterceptor]),
+    ),
     provideRouter(appRoutes),
   ],
 };

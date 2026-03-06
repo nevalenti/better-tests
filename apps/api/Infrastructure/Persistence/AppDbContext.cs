@@ -398,7 +398,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             // Indexes
             entity.HasIndex(e => new { e.TestRunId, e.TestCaseId })
                 .IsUnique()
-                .HasFilter("[TestCaseId] IS NOT NULL")
+                .HasFilter("\"TestCaseId\" IS NOT NULL")
                 .HasDatabaseName("ix_test_results_run_id_case_id_unique");
 
             entity.HasIndex(e => e.Result)
