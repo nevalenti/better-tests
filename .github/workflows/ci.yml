@@ -107,6 +107,8 @@ jobs:
   test-api:
     name: API Tests (.NET)
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
     steps:
       - uses: actions/checkout@v4
 
@@ -134,14 +136,22 @@ jobs:
           ConnectionStrings__DefaultConnection: 'Server=localhost;Database=postgres;User ID=postgres;Password=postgres;'
 
       - name: Run API tests with coverage
-        run: dotnet test apps/api-tests/ApiTests.csproj --collect:"XPlat Code Coverage" --results-directory ./coverage --logger "console;verbosity=normal"
+        run: dotnet test apps/api-tests/ApiTests.csproj --collect:"XPlat Code Coverage" --results-directory ./test-results --logger "console;verbosity=normal" --logger "trx"
+
+      - name: Report test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: API Test Results
+          path: 'test-results/*.trx'
+          reporter: 'dotnet-trx'
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: api-coverage
-          path: coverage/
+          path: test-results/
           retention-days: 7
 
   build:
