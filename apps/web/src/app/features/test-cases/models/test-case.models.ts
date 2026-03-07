@@ -1,4 +1,7 @@
-import { TestCasePriority, TestCaseStatus } from './common.models';
+import {
+  TestCasePriority,
+  TestCaseStatus,
+} from '../../../core/models/common.models';
 
 export interface CreateTestCaseRequest {
   name: string;

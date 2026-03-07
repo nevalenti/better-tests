@@ -14,7 +14,7 @@ import {
 import { environment } from '../environments/environment';
 
 import { appRoutes } from './app.routes';
-import { httpErrorInterceptor } from './core/http-error.interceptor';
+import { httpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

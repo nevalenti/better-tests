@@ -3,14 +3,14 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApiHttpClient } from '../http-client';
-import { PaginatedResponse } from '../types/common.models';
+import { ApiHttpClient } from '../../../core/http-client';
+import { PaginatedResponse } from '../../../core/models/common.models';
 import {
   CreateTestSuiteRequest,
   TestSuiteDetailResponse,
   TestSuiteResponse,
   UpdateTestSuiteRequest,
-} from '../types/test-suite.models';
+} from '../models/test-suite.models';
 
 @Injectable({
   providedIn: 'root',

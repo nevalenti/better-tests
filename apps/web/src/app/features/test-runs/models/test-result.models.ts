@@ -1,4 +1,4 @@
-import { TestResultStatus } from './common.models';
+import { TestResultStatus } from '../../../core/models/common.models';
 
 export interface CreateTestResultRequest {
   testCaseId?: string;

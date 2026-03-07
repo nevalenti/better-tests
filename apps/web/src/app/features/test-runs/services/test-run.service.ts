@@ -3,13 +3,16 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApiHttpClient } from '../http-client';
-import { PaginatedResponse, TestRunStatus } from '../types/common.models';
+import { ApiHttpClient } from '../../../core/http-client';
+import {
+  PaginatedResponse,
+  TestRunStatus,
+} from '../../../core/models/common.models';
 import {
   CreateTestRunRequest,
   TestRunResponse,
   UpdateTestRunRequest,
-} from '../types/test-run.models';
+} from '../models/test-run.models';
 
 @Injectable({
   providedIn: 'root',

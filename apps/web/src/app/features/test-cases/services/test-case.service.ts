@@ -3,18 +3,18 @@ import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApiHttpClient } from '../http-client';
+import { ApiHttpClient } from '../../../core/http-client';
 import {
   PaginatedResponse,
   TestCasePriority,
   TestCaseStatus,
-} from '../types/common.models';
+} from '../../../core/models/common.models';
 import {
   CreateTestCaseRequest,
   TestCaseDetailResponse,
   TestCaseResponse,
   UpdateTestCaseRequest,
-} from '../types/test-case.models';
+} from '../models/test-case.models';
 
 @Injectable({
   providedIn: 'root',

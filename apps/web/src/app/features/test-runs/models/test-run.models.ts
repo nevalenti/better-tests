@@ -1,4 +1,4 @@
-import { TestRunStatus } from './common.models';
+import { TestRunStatus } from '../../../core/models/common.models';
 
 export interface CreateTestRunRequest {
   name: string;
