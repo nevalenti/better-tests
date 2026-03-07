@@ -1,21 +1,28 @@
 using BetterTests.Presentation.Extensions;
 using Serilog;
 
+var builder = WebApplication.CreateBuilder(args);
+var appVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "Unknown";
+
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.Console()
-    .WriteTo.File("logs/api-.logs", rollingInterval: RollingInterval.Day)
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.WithProperty("ApplicationVersion", appVersion)
+    .Enrich.WithProperty("Environment", builder.Environment.EnvironmentName)
     .CreateLogger();
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
-
     builder.Host.UseSerilog();
 
     builder.Services.ConfigureApplicationServices(builder.Configuration, builder.Environment);
 
     var app = builder.Build();
+
+    Log.Information(
+        "Starting BetterTests API v{Version} in {Environment}",
+        appVersion,
+        app.Environment.EnvironmentName);
+
     app.ConfigureApplicationPipeline();
 
     app.Run();

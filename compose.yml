@@ -65,5 +65,18 @@ services:
       postgres:
         condition: service_healthy
 
+  seq:
+    image: datalust/seq:latest
+    container_name: better-tests-seq
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINPASSWORD: admin
+    ports:
+      - "5341:5341"
+      - "8081:80"
+    volumes:
+      - seq_data:/data
+
 volumes:
   postgres_data:
+  seq_data:
