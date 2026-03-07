@@ -23,7 +23,7 @@ export interface AppNotification {
   timeout?: number;
 }
 
-export const NotificationStore = signalStore(
+export const NotificationsStore = signalStore(
   { providedIn: 'root' },
   withState({
     notifications: [] as AppNotification[],

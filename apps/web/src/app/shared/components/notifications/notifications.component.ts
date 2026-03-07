@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
-import { NotificationStore } from '../../stores/notification.store';
+import { NotificationsStore } from '../../stores/notifications.store';
 
 @Component({
   selector: 'app-notifications',
@@ -9,7 +9,7 @@ import { NotificationStore } from '../../stores/notification.store';
   templateUrl: 'notifications.component.html',
 })
 export class NotificationsComponent {
-  readonly store = inject(NotificationStore);
+  readonly store = inject(NotificationsStore);
 
   getAlertClass(type: string) {
     return {
