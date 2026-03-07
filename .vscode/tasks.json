@@ -1,0 +1,77 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-api",
+      "command": "npx",
+      "args": ["nx", "run", "api:build"],
+      "type": "shell",
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      }
+    },
+    {
+      "label": "start-api",
+      "command": "npx",
+      "args": ["nx", "run", "api:run"],
+      "type": "shell",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*Application startup complete",
+          "endsPattern": "^.*Application shutdown complete"
+        }
+      }
+    },
+    {
+      "label": "start-web",
+      "command": "npx",
+      "args": ["nx", "serve", "web"],
+      "type": "shell",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 1,
+          "location": 2,
+          "message": 3
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*✔ Compiled successfully|Application bundle generated|Listening at.*4200",
+          "endsPattern": "^.*(?:webpack compilation failed|Application error)"
+        }
+      }
+    },
+    {
+      "label": "stop-services",
+      "type": "shell",
+      "command": "echo",
+      "args": ["Services stopped"],
+      "presentation": {
+        "echo": true,
+        "reveal": "silent"
+      }
+    }
+  ]
+}
