@@ -131,12 +131,12 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Validate migrations
-        run: dotnet ef migrations has-pending-model-changes --project apps/api/Infrastructure/BetterTests.Infrastructure.csproj --startup-project apps/api/Api.csproj
+        run: dotnet ef migrations has-pending-model-changes --project apps/BetterTests.Api/Infrastructure/BetterTests.Infrastructure.csproj --startup-project apps/BetterTests.Api/BetterTests.Api.csproj
         env:
           ConnectionStrings__DefaultConnection: 'Server=localhost;Database=postgres;User ID=postgres;Password=postgres;'
 
       - name: Run API tests with coverage
-        run: dotnet test apps/api-tests/ApiTests.csproj --collect:"XPlat Code Coverage" --results-directory ./test-results --logger "console;verbosity=normal" --logger "trx"
+        run: dotnet test apps/BetterTests.Api.Tests/BetterTests.Api.Tests.csproj --collect:"XPlat Code Coverage" --results-directory ./test-results --logger "console;verbosity=normal" --logger "trx"
 
       - name: Report test results
         uses: dorny/test-reporter@v1

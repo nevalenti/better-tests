@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/apps/BetterTests.Api/">
+    <Project Path="apps/BetterTests.Api/BetterTests.Api.csproj" />
+    <Project Path="apps/BetterTests.Api/Domain/BetterTests.Domain.csproj" />
+    <Project Path="apps/BetterTests.Api/Application/BetterTests.Application.csproj" />
+    <Project Path="apps/BetterTests.Api/Infrastructure/BetterTests.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/apps/BetterTests.Api.Tests/">
+    <Project Path="apps/BetterTests.Api.Tests/BetterTests.Api.Tests.csproj" />
+  </Folder>
+</Solution>
