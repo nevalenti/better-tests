@@ -1,7 +1,10 @@
 using Asp.Versioning;
+
 using BetterTests.Application.Mappings;
 using BetterTests.Infrastructure.HealthChecks;
+
 using FluentValidation.AspNetCore;
+
 using Microsoft.AspNetCore.RateLimiting;
 
 namespace BetterTests.Api.Presentation.Extensions;

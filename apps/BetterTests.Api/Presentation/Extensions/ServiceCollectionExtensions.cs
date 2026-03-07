@@ -3,6 +3,7 @@ using BetterTests.Application.Services;
 using BetterTests.Application.Validators;
 using BetterTests.Domain.Interfaces;
 using BetterTests.Infrastructure.Persistence;
+
 using FluentValidation;
 
 namespace BetterTests.Api.Presentation.Extensions;

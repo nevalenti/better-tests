@@ -1,4 +1,5 @@
 using BetterTests.Application.DTOs;
+
 using FluentValidation;
 
 namespace BetterTests.Application.Validators;

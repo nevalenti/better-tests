@@ -1,5 +1,7 @@
 using System.Text.Json;
+
 using BetterTests.Domain.Exceptions;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

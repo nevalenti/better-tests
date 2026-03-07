@@ -1,6 +1,7 @@
 using BetterTests.Domain.Entities;
 using BetterTests.Domain.Interfaces;
 using BetterTests.Infrastructure.Persistence;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace BetterTests.Infrastructure.Repositories;

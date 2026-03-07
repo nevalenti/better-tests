@@ -1,9 +1,11 @@
-using BetterTests.Infrastructure.Persistence;
 using BetterTests.Api.Presentation.Extensions;
+using BetterTests.Infrastructure.Persistence;
+
 using FluentAssertions;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
+
 using Xunit;
 
 namespace BetterTests.Api.Tests.Extensions;

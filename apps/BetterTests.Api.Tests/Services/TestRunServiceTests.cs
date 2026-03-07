@@ -3,8 +3,11 @@ using BetterTests.Application.Services;
 using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
+
 using FluentAssertions;
+
 using Moq;
+
 using Xunit;
 
 namespace BetterTests.Api.Tests.Services;

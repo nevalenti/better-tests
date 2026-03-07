@@ -47,11 +47,16 @@ dotnet_style_null_propagation = true
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true
 
 dotnet_sort_system_directives_first = true
-dotnet_separate_import_directive_groups = false
+dotnet_separate_import_directive_groups = true
 
 [*.cs]
 indent_style = space
 indent_size = 4
+
+# Roslyn Analyzers - Using Directives
+dotnet_diagnostic.IDE0005.severity = warning  # Remove unused imports
+dotnet_diagnostic.IDE0065.severity = warning  # Using directive placement (enforces outside_namespace + sorting)
+dotnet_diagnostic.CA1050.severity = warning   # Declare types in namespaces
 
 csharp_style_var_for_built_in_types = true
 csharp_style_var_when_type_is_apparent = true

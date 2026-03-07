@@ -1,4 +1,5 @@
 using BetterTests.Api.Presentation.Extensions;
+
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

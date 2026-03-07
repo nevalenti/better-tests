@@ -1,7 +1,9 @@
 using BetterTests.Application.DTOs;
 using BetterTests.Application.Validators;
 using BetterTests.Domain.Entities;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BetterTests.Api.Tests.Validators;

@@ -1,4 +1,5 @@
 using Scalar.AspNetCore;
+
 using Serilog;
 
 namespace BetterTests.Api.Presentation.Extensions;

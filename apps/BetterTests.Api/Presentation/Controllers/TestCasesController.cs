@@ -1,7 +1,9 @@
 using Asp.Versioning;
+
 using BetterTests.Application.DTOs;
 using BetterTests.Application.Interfaces;
 using BetterTests.Domain.Entities;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,6 +1,9 @@
 using System.Net;
+
 using BetterTests.Api.Tests.Fixtures;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BetterTests.Api.Tests

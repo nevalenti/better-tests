@@ -1,10 +1,13 @@
 using System.Net;
 using System.Net.Http.Json;
+
 using BetterTests.Api.Tests.Fixtures;
 using BetterTests.Api.Tests.Helpers;
 using BetterTests.Application.DTOs;
 using BetterTests.Domain.Entities;
+
 using FluentAssertions;
+
 using Xunit;
 
 namespace BetterTests.Api.Tests.Controllers;

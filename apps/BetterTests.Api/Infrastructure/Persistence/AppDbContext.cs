@@ -1,4 +1,5 @@
 using BetterTests.Domain.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace BetterTests.Infrastructure.Persistence;

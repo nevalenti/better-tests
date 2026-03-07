@@ -1,4 +1,5 @@
 using AutoMapper;
+
 using BetterTests.Application.DTOs;
 using BetterTests.Domain.Entities;
 
