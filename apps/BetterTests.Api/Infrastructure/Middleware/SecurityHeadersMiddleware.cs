@@ -20,7 +20,7 @@ public class SecurityHeadersMiddleware(RequestDelegate next)
             "geolocation=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), accelerometer=()";
 
         headers.ContentSecurityPolicy =
-            "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https:; font-src 'self'; connect-src 'self' https:";
+            "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; font-src 'self'; connect-src 'self' https:";
 
         if (context.Request.IsHttps)
         {

@@ -47,8 +47,8 @@ public static class ServiceConfiguration
         services.AddCors(options =>
             options.AddDefaultPolicy(policy =>
                 policy.WithOrigins(allowedOrigins)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
+                    .WithMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                    .WithHeaders("Content-Type", "Authorization")
                     .AllowCredentials()
                     .WithExposedHeaders(
                         "Content-Type",

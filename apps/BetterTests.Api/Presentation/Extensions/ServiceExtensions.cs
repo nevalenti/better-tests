@@ -44,7 +44,7 @@ public static class ServiceExtensions
             options.Authority = authority;
             options.Audience = clientId;
             options.MetadataAddress = $"{authority}/.well-known/openid-configuration";
-            options.RequireHttpsMetadata = environment.IsProduction();
+            options.RequireHttpsMetadata = !environment.IsDevelopment() && authority.StartsWith("https://");
             options.MapInboundClaims = false;
             options.TokenValidationParameters = new TokenValidationParameters
             {
