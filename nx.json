@@ -58,21 +58,7 @@
       "inputs": ["default", "^production"]
     }
   },
-  "plugins": [
-    "@nx/dotnet",
-    {
-      "plugin": "@nx/playwright/plugin",
-      "options": {
-        "targetName": "e2e"
-      }
-    },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    }
-  ],
+  "plugins": ["@nx/dotnet"],
   "generators": {
     "@nx/angular:application": {
       "e2eTestRunner": "playwright",

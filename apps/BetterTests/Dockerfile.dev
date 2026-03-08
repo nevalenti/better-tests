@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+WORKDIR /src
+
+COPY Directory.Build.props .
+COPY Directory.Packages.props .
+COPY global.json .
+
+COPY apps/BetterTests/BetterTests.csproj apps/BetterTests/
+COPY apps/BetterTests/Domain/BetterTests.Domain.csproj apps/BetterTests/Domain/
+COPY apps/BetterTests/Application/BetterTests.Application.csproj apps/BetterTests/Application/
+COPY apps/BetterTests/Infrastructure/BetterTests.Infrastructure.csproj apps/BetterTests/Infrastructure/
+
+RUN dotnet restore apps/BetterTests/BetterTests.csproj
+
+COPY . .
+
+EXPOSE 3000
+
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_HTTP_PORTS=3000
+
+CMD ["dotnet", "watch", "--project", "apps/BetterTests/BetterTests.csproj"]

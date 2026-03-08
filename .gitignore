@@ -14,6 +14,7 @@
 **/obj
 **/publish
 **/.vs
+*.xml
 
 # Node
 node_modules
@@ -29,6 +30,7 @@ tmp
 
 # Misc
 *.log
+*.logs
 
 # Certificates
 certs/

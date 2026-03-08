@@ -1,0 +1,71 @@
+services:
+  api:
+    build:
+      dockerfile: apps/BetterTests/Dockerfile.dev
+    ports:
+      - "5000:5000"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      OpenTelemetry__ExporterType: console
+      KC_PROXY: ""
+    volumes:
+      - ./:/src
+    working_dir: /src
+
+  web:
+    build:
+      dockerfile: apps/web/Dockerfile.dev
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    working_dir: /app
+
+  postgres:
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  keycloak:
+    command: start-dev
+    ports:
+      - "${KEYCLOAK_PORT}:8080"
+    environment:
+      KC_PROXY: ""
+
+  migrate:
+    build:
+      dockerfile: apps/BetterTests/Dockerfile.migrate
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: better-tests-mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    container_name: better-tests-pgweb
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+    ports:
+      - "5050:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  seq:
+    image: datalust/seq:latest
+    container_name: better-tests-seq
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINPASSWORD: admin
+    ports:
+      - "5341:5341"
+      - "5380:80"
+    volumes:
+      - seq_data:/data
+
+volumes:
+  seq_data:

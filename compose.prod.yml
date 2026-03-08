@@ -1,0 +1,71 @@
+services:
+  postgres:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1024M
+        reservations:
+          cpus: "1"
+          memory: 512M
+
+  keycloak:
+    restart: unless-stopped
+    command: start
+    environment:
+      KC_PROXY: edge
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 768M
+        reservations:
+          cpus: "0.5"
+          memory: 384M
+
+  migrate:
+    restart: no
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 256M
+        reservations:
+          cpus: "0.5"
+          memory: 128M
+
+  api:
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      OpenTelemetry__ExporterType: otlp
+      OpenTelemetry__OtlpEndpoint: ${OTLP_ENDPOINT:-http://localhost:4317}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1024M
+        reservations:
+          cpus: "1"
+          memory: 512M
+
+  web:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+        reservations:
+          cpus: "0.5"
+          memory: 256M
+
+volumes:
+  postgres_data:

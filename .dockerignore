@@ -1,0 +1,55 @@
+# Node modules and dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Git
+.git/
+.gitignore
+
+# Build output
+dist/
+build/
+
+# .NET build artifacts
+**/bin/
+**/obj/
+**/*.Tests/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Development tools
+terraform/
+k8s/
+.vscode/
+.idea/
+
+# Keycloak themes (only needed at runtime, baked into keycloak image)
+themes/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Documentation
+docs/
+*.md
+
+# Temporary files
+tmp/
+temp/

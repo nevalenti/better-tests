@@ -2,7 +2,7 @@ resource "keycloak_user" "test_users" {
   for_each = var.test_users
 
   realm_id = keycloak_realm.better_tests.id
-  username = each.key
+  username = each.value.email
   email    = each.value.email
   enabled  = true
 
