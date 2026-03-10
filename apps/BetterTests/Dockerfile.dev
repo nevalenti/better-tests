@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0
 
-WORKDIR /src
+WORKDIR /app
 
 COPY Directory.Build.props .
 COPY Directory.Packages.props .
