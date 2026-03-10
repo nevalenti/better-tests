@@ -14,7 +14,10 @@ public static class ApplicationConfiguration
         app.UseSerilogRequestLogging();
         app.UseMiddleware<ExceptionHandlingMiddleware>();
         app.UseMiddleware<SecurityHeadersMiddleware>();
-        app.UseHttpsRedirection();
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseHttpsRedirection();
+        }
         app.UseRateLimiter();
         app.UseCors();
 

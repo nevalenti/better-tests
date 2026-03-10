@@ -7,8 +7,11 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbConte
 {
     public AppDbContext CreateDbContext(string[] args)
     {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+            ?? "Host=localhost;Database=design_time_db";
+
         var builder = new DbContextOptionsBuilder<AppDbContext>();
-        builder.UseNpgsql("Host=localhost;Database=design_time_db");
+        builder.UseNpgsql(connectionString);
         return new AppDbContext(builder.Options);
     }
 }

@@ -8,6 +8,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       OpenTelemetry__ExporterType: console
       KC_PROXY: ""
+      Keycloak__Url: "http://keycloak:8080"
+      Serilog__WriteTo__2__Args__serverUrl: "http://seq:5341"
     volumes:
       - ./:/src
     working_dir: /src
@@ -27,7 +29,9 @@ services:
       - "${POSTGRES_PORT}:5432"
 
   keycloak:
-    command: start-dev
+    command:
+      - start-dev
+      - --http-management-port=9000
     ports:
       - "${KEYCLOAK_PORT}:8080"
     environment:
@@ -60,7 +64,7 @@ services:
     container_name: better-tests-seq
     environment:
       ACCEPT_EULA: "Y"
-      SEQ_FIRSTRUN_ADMINPASSWORD: admin
+      SEQ_FIRSTRUN_NOAUTHENTICATION: "true"
     ports:
       - "5341:5341"
       - "5380:80"
