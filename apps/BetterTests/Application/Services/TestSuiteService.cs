@@ -62,9 +62,7 @@ public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRe
             Id = Guid.NewGuid(),
             ProjectId = projectId,
             Name = request.Name,
-            Description = request.Description,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            Description = request.Description
         };
 
         await _suites.AddAsync(suite);
@@ -88,7 +86,6 @@ public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRe
 
         suite.Name = request.Name;
         suite.Description = request.Description;
-        suite.UpdatedAt = DateTime.UtcNow;
 
         await _suites.UpdateAsync(suite);
         await _suites.SaveChangesAsync();

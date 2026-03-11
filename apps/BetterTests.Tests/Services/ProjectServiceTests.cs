@@ -139,9 +139,7 @@ public class ProjectServiceTests
         {
             Id = projectId,
             Name = "New Project",
-            Description = "Description",
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            Description = "Description"
         };
 
         var response = new ProjectResponse(

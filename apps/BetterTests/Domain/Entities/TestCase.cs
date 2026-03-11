@@ -1,6 +1,6 @@
 namespace BetterTests.Domain.Entities;
 
-public class TestCase
+public class TestCase : AuditableEntity
 {
     public Guid Id { get; set; }
     public Guid SuiteId { get; set; }
@@ -10,9 +10,6 @@ public class TestCase
     public string? Postconditions { get; set; }
     public TestCasePriority Priority { get; set; } = TestCasePriority.Medium;
     public TestCaseStatus Status { get; set; } = TestCaseStatus.Draft;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
     public TestSuite Suite { get; set; } = null!;
     public ICollection<TestCaseStep> Steps { get; set; } = [];
     public ICollection<TestResult> TestResults { get; set; } = [];

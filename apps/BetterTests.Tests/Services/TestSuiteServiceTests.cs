@@ -37,7 +37,7 @@ public class TestSuiteServiceTests
         var project = new Project { Id = projectId, Name = "Test Project" };
         var suites = new List<TestSuite>
         {
-            new() { Id = suiteId, Name = "Auth Tests", ProjectId = projectId, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+            new() { Id = suiteId, Name = "Auth Tests", ProjectId = projectId }
         };
 
         _projectRepositoryMock.Setup(r => r.GetByIdAsync(projectId)).ReturnsAsync(project);
@@ -99,17 +99,13 @@ public class TestSuiteServiceTests
             Id = suiteId,
             Name = "Auth Tests",
             ProjectId = projectId,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow,
             TestCases =
             [
                 new()
                 {
                     Id = Guid.NewGuid(),
                     Name = "Valid Login",
-                    SuiteId = suiteId,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    SuiteId = suiteId
                 }
             ]
         };
@@ -156,9 +152,7 @@ public class TestSuiteServiceTests
         {
             Id = suiteId,
             Name = "Auth Tests",
-            ProjectId = otherProjectId,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            ProjectId = otherProjectId
         };
 
         _projectRepositoryMock.Setup(r => r.GetByIdAsync(projectId)).ReturnsAsync(project);
@@ -180,9 +174,7 @@ public class TestSuiteServiceTests
             Id = Guid.NewGuid(),
             Name = "New Suite",
             Description = "Description",
-            ProjectId = projectId,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            ProjectId = projectId
         };
 
         _projectRepositoryMock.Setup(r => r.GetByIdAsync(projectId)).ReturnsAsync(project);
@@ -226,9 +218,7 @@ public class TestSuiteServiceTests
         {
             Id = suiteId,
             Name = "Old Name",
-            ProjectId = projectId,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            ProjectId = projectId
         };
 
         var updateRequest = new UpdateTestSuiteRequest("Updated Name", "Updated Description");
@@ -237,9 +227,7 @@ public class TestSuiteServiceTests
             Id = suiteId,
             Name = "Updated Name",
             Description = "Updated Description",
-            ProjectId = projectId,
-            CreatedAt = existingSuite.CreatedAt,
-            UpdatedAt = DateTime.UtcNow
+            ProjectId = projectId
         };
 
         TestSuite? capturedEntity = null;
@@ -293,9 +281,7 @@ public class TestSuiteServiceTests
         {
             Id = suiteId,
             Name = "Old Name",
-            ProjectId = otherProjectId,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            ProjectId = otherProjectId
         };
         var updateRequest = new UpdateTestSuiteRequest("Updated Name", "Description");
 

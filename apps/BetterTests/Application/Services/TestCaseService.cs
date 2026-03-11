@@ -67,9 +67,7 @@ public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCase
             Preconditions = request.Preconditions,
             Postconditions = request.Postconditions,
             Priority = request.Priority,
-            Status = request.Status,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            Status = request.Status
         };
 
         await _cases.AddAsync(testCase);
@@ -99,7 +97,6 @@ public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCase
         testCase.Postconditions = request.Postconditions;
         testCase.Priority = request.Priority;
         testCase.Status = request.Status;
-        testCase.UpdatedAt = DateTime.UtcNow;
 
         await _cases.UpdateAsync(testCase);
         await _cases.SaveChangesAsync();

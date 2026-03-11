@@ -45,8 +45,6 @@ public class ProjectService(IProjectRepository projectRepository, IMapper mapper
 
         var project = _mapper.Map<Project>(request);
         project.Id = Guid.NewGuid();
-        project.CreatedAt = DateTime.UtcNow;
-        project.UpdatedAt = DateTime.UtcNow;
 
         await _projects.AddAsync(project);
         await _projects.SaveChangesAsync();
@@ -68,7 +66,6 @@ public class ProjectService(IProjectRepository projectRepository, IMapper mapper
         }
 
         _mapper.Map(request, project);
-        project.UpdatedAt = DateTime.UtcNow;
 
         await _projects.UpdateAsync(project);
         await _projects.SaveChangesAsync();
