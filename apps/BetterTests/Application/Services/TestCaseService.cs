@@ -4,12 +4,15 @@ using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace BetterTests.Application.Services;
 
-public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCaseRepository testCaseRepository) : ITestCaseService
+public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCaseRepository testCaseRepository, ILogger<TestCaseService> logger) : ITestCaseService
 {
     private readonly ITestSuiteRepository _suites = testSuiteRepository;
     private readonly ITestCaseRepository _cases = testCaseRepository;
+    private readonly ILogger<TestCaseService> _logger = logger;
 
     public async Task<PaginatedResponse<TestCaseResponse>> GetBySuiteIdAsync(Guid suiteId, int page = 1, int pageSize = 20, TestCasePriority? priority = null, TestCaseStatus? status = null)
     {
@@ -72,6 +75,8 @@ public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCase
         await _cases.AddAsync(testCase);
         await _cases.SaveChangesAsync();
 
+        _logger.LogInformation("Created test case {CaseId} ({CaseName}) in suite {SuiteId}", testCase.Id, testCase.Name, suiteId);
+
         return new TestCaseResponse(
             testCase.Id, testCase.SuiteId, testCase.Name, testCase.Description,
             testCase.Preconditions, testCase.Postconditions, testCase.Priority, testCase.Status,
@@ -98,6 +103,8 @@ public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCase
 
         await _cases.UpdateAsync(testCase);
         await _cases.SaveChangesAsync();
+
+        _logger.LogInformation("Updated test case {CaseId} in suite {SuiteId}", id, suiteId);
     }
 
     public async Task DeleteAsync(Guid suiteId, Guid id)
@@ -111,5 +118,7 @@ public class TestCaseService(ITestSuiteRepository testSuiteRepository, ITestCase
 
         await _cases.DeleteAsync(id);
         await _cases.SaveChangesAsync();
+
+        _logger.LogInformation("Deleted test case {CaseId} ({CaseName}) from suite {SuiteId}", id, testCase.Name, suiteId);
     }
 }

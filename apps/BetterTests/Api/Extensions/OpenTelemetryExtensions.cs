@@ -71,7 +71,7 @@ public static class OpenTelemetryExtensions
         string exporterType,
         IConfigurationSection otelConfig)
     {
-        if (exporterType == "otlp")
+        if (exporterType is "otlp")
         {
             var endpoint = otelConfig["OtlpEndpoint"] ?? "http://localhost:4317";
             builder.AddOtlpExporter(options =>
@@ -79,7 +79,7 @@ public static class OpenTelemetryExtensions
                 options.Endpoint = new Uri(endpoint);
             });
         }
-        else
+        else if (exporterType is not "none")
         {
             builder.AddConsoleExporter();
         }
@@ -90,7 +90,7 @@ public static class OpenTelemetryExtensions
         string exporterType,
         IConfigurationSection otelConfig)
     {
-        if (exporterType == "otlp")
+        if (exporterType is "otlp")
         {
             var endpoint = otelConfig["OtlpEndpoint"] ?? "http://localhost:4317";
             builder.AddOtlpExporter(options =>
@@ -98,7 +98,7 @@ public static class OpenTelemetryExtensions
                 options.Endpoint = new Uri(endpoint);
             });
         }
-        else if (exporterType != "none")
+        else if (exporterType is not "none")
         {
             builder.AddConsoleExporter();
         }

@@ -14,9 +14,17 @@ public class DatabaseHealthCheck(AppDbContext context, ILogger<DatabaseHealthChe
     {
         try
         {
-            await _context.Database.CanConnectAsync(cancellationToken);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            cts.CancelAfter(TimeSpan.FromSeconds(5));
+
+            await _context.Database.CanConnectAsync(cts.Token);
 
             return HealthCheckResult.Healthy("Database connection successful");
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.LogWarning("Database health check timed out after 5 seconds");
+            return HealthCheckResult.Degraded("Database connection timeout");
         }
         catch (Exception ex)
         {

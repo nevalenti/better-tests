@@ -4,12 +4,15 @@ using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace BetterTests.Application.Services;
 
-public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRepository testSuiteRepository) : ITestSuiteService
+public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRepository testSuiteRepository, ILogger<TestSuiteService> logger) : ITestSuiteService
 {
     private readonly IProjectRepository _projects = projectRepository;
     private readonly ITestSuiteRepository _suites = testSuiteRepository;
+    private readonly ILogger<TestSuiteService> _logger = logger;
 
     public async Task<PaginatedResponse<TestSuiteResponse>> GetByProjectIdAsync(Guid projectId, int page = 1, int pageSize = 20)
     {
@@ -67,6 +70,8 @@ public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRe
         await _suites.AddAsync(suite);
         await _suites.SaveChangesAsync();
 
+        _logger.LogInformation("Created test suite {SuiteId} ({SuiteName}) in project {ProjectId}", suite.Id, suite.Name, projectId);
+
         return new TestSuiteResponse(
             suite.Id, suite.ProjectId, suite.Name, suite.Description, suite.CreatedAt, suite.UpdatedAt
         );
@@ -87,6 +92,8 @@ public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRe
 
         await _suites.UpdateAsync(suite);
         await _suites.SaveChangesAsync();
+
+        _logger.LogInformation("Updated test suite {SuiteId} in project {ProjectId}", id, projectId);
     }
 
     public async Task DeleteAsync(Guid projectId, Guid id)
@@ -100,5 +107,7 @@ public class TestSuiteService(IProjectRepository projectRepository, ITestSuiteRe
 
         await _suites.DeleteAsync(id);
         await _suites.SaveChangesAsync();
+
+        _logger.LogInformation("Deleted test suite {SuiteId} ({SuiteName}) from project {ProjectId}", id, suite.Name, projectId);
     }
 }

@@ -31,7 +31,15 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception occurred");
+            var (statusCode, _) = CategorizeException(ex);
+            _logger.LogError(
+                ex,
+                "{ExceptionType} on {Method} {Path} → {StatusCode}: {Message}",
+                ex.GetType().Name,
+                context.Request.Method,
+                context.Request.Path,
+                statusCode,
+                ex.Message);
             await HandleExceptionAsync(context, ex);
         }
     }
@@ -46,75 +54,72 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
         context.Response.Headers.Pragma = "no-cache";
         context.Response.Headers.Expires = "0";
 
-        var problemDetails = new ProblemDetailsResponse
-        {
-            Instance = context.Request.Path,
-            StackTrace = _environment.IsDevelopment() ? exception.StackTrace : null,
-            InnerException = _environment.IsDevelopment() ? GetInnerException(exception.InnerException, maxDepth: 5) : null
-        };
+        var (statusCode, problemDetails) = CategorizeException(exception);
+        problemDetails.Instance = context.Request.Path;
+        problemDetails.StackTrace = _environment.IsDevelopment() ? exception.StackTrace : null;
+        problemDetails.InnerException = _environment.IsDevelopment() ? GetInnerException(exception.InnerException, maxDepth: 5) : null;
 
-        switch (exception)
-        {
-            case EntityNotFoundException ex:
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
-                problemDetails.Status = 404;
-                problemDetails.Type = "https://api.bettertests.local/errors/entity-not-found";
-                problemDetails.Title = "Entity Not Found";
-                problemDetails.Detail = ex.Message;
-                break;
-
-            case DuplicateEntityException ex:
-                context.Response.StatusCode = StatusCodes.Status409Conflict;
-                problemDetails.Status = 409;
-                problemDetails.Type = "https://api.bettertests.local/errors/duplicate-entity";
-                problemDetails.Title = "Duplicate Entity";
-                problemDetails.Detail = ex.Message;
-                break;
-
-            case ParentNotFoundException ex:
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
-                problemDetails.Status = 404;
-                problemDetails.Type = "https://api.bettertests.local/errors/parent-not-found";
-                problemDetails.Title = "Parent Entity Not Found";
-                problemDetails.Detail = ex.Message;
-                break;
-
-            case FluentValidation.ValidationException ex:
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                problemDetails.Status = 400;
-                problemDetails.Type = "https://api.bettertests.local/errors/validation-error";
-                problemDetails.Title = "Validation Error";
-                problemDetails.Detail = string.Join("; ", ex.Errors.Select(e => e.ErrorMessage));
-                break;
-
-            case BetterTests.Domain.Exceptions.ValidationException ex:
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                problemDetails.Status = 400;
-                problemDetails.Type = "https://api.bettertests.local/errors/validation-error";
-                problemDetails.Title = "Validation Error";
-                problemDetails.Detail = ex.Message;
-                break;
-
-            default:
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                problemDetails.Status = 500;
-                problemDetails.Type = "https://api.bettertests.local/errors/internal-error";
-                problemDetails.Title = "Internal Server Error";
-                problemDetails.Detail = _environment.IsDevelopment()
-                    ? exception.Message
-                    : "An unexpected error occurred. Please try again later.";
-                break;
-        }
+        context.Response.StatusCode = statusCode;
 
         try
         {
             var json = JsonSerializer.Serialize(problemDetails, JsonOptions);
             return context.Response.WriteAsync(json);
         }
-        catch
+        catch (Exception jsonEx)
         {
+            _logger.LogError(jsonEx, "Failed to serialize error response");
             return context.Response.WriteAsync(FallbackErrorResponse);
         }
+    }
+
+    private static (int StatusCode, ProblemDetailsResponse Details) CategorizeException(Exception exception)
+    {
+        return exception switch
+        {
+            EntityNotFoundException ex => (StatusCodes.Status404NotFound, new ProblemDetailsResponse
+            {
+                Status = 404,
+                Type = "https://api.bettertests.local/errors/entity-not-found",
+                Title = "Entity Not Found",
+                Detail = ex.Message
+            }),
+            DuplicateEntityException ex => (StatusCodes.Status409Conflict, new ProblemDetailsResponse
+            {
+                Status = 409,
+                Type = "https://api.bettertests.local/errors/duplicate-entity",
+                Title = "Duplicate Entity",
+                Detail = ex.Message
+            }),
+            ParentNotFoundException ex => (StatusCodes.Status404NotFound, new ProblemDetailsResponse
+            {
+                Status = 404,
+                Type = "https://api.bettertests.local/errors/parent-not-found",
+                Title = "Parent Entity Not Found",
+                Detail = ex.Message
+            }),
+            FluentValidation.ValidationException ex => (StatusCodes.Status400BadRequest, new ProblemDetailsResponse
+            {
+                Status = 400,
+                Type = "https://api.bettertests.local/errors/validation-error",
+                Title = "Validation Error",
+                Detail = string.Join("; ", ex.Errors.Select(e => e.ErrorMessage))
+            }),
+            BetterTests.Domain.Exceptions.ValidationException ex => (StatusCodes.Status400BadRequest, new ProblemDetailsResponse
+            {
+                Status = 400,
+                Type = "https://api.bettertests.local/errors/validation-error",
+                Title = "Validation Error",
+                Detail = ex.Message
+            }),
+            _ => (StatusCodes.Status500InternalServerError, new ProblemDetailsResponse
+            {
+                Status = 500,
+                Type = "https://api.bettertests.local/errors/internal-error",
+                Title = "Internal Server Error",
+                Detail = "An unexpected error occurred. Please try again later."
+            })
+        };
     }
 
     private ProblemDetailsResponse? GetInnerException(Exception? exception, int maxDepth = 5, int currentDepth = 0)

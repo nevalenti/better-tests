@@ -20,7 +20,6 @@ public class CorrelationIdMiddleware(RequestDelegate next)
 
         using (LogContext.PushProperty(CorrelationIdProperty, correlationId))
         using (LogContext.PushProperty("RequestId", context.TraceIdentifier))
-        using (LogContext.PushProperty("UserId", context.User?.FindFirst("sub")?.Value ?? "anonymous"))
         {
             await _next(context);
         }

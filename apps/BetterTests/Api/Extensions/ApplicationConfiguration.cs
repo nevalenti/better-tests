@@ -1,8 +1,4 @@
-using BetterTests.Infrastructure.Middleware;
-
 using Scalar.AspNetCore;
-
-using Serilog;
 
 namespace BetterTests.Api.Extensions;
 
@@ -10,10 +6,11 @@ public static class ApplicationConfiguration
 {
     public static WebApplication ConfigureApplicationPipeline(this WebApplication app)
     {
-        app.UseMiddleware<CorrelationIdMiddleware>();
-        app.UseSerilogRequestLogging();
-        app.UseMiddleware<ExceptionHandlingMiddleware>();
-        app.UseMiddleware<SecurityHeadersMiddleware>();
+        app.UseCorrelationId();
+        app.UseExceptionHandling();
+        app.ConfigureSerilogRequestLogging();
+
+        app.UseSecurityHeaders();
         if (!app.Environment.IsDevelopment())
         {
             app.UseHttpsRedirection();

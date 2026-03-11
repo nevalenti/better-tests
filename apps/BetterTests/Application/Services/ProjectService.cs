@@ -6,12 +6,15 @@ using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace BetterTests.Application.Services;
 
-public class ProjectService(IProjectRepository projectRepository, IMapper mapper) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IMapper mapper, ILogger<ProjectService> logger) : IProjectService
 {
     private readonly IProjectRepository _projects = projectRepository;
     private readonly IMapper _mapper = mapper;
+    private readonly ILogger<ProjectService> _logger = logger;
 
     public async Task<PaginatedResponse<ProjectResponse>> GetAllAsync(int page = 1, int pageSize = 20, string? search = null)
     {
@@ -48,6 +51,7 @@ public class ProjectService(IProjectRepository projectRepository, IMapper mapper
         await _projects.AddAsync(project);
         await _projects.SaveChangesAsync();
 
+        _logger.LogInformation("Created project {ProjectId} ({ProjectName})", project.Id, project.Name);
         return _mapper.Map<ProjectResponse>(project);
     }
 
@@ -68,6 +72,8 @@ public class ProjectService(IProjectRepository projectRepository, IMapper mapper
 
         await _projects.UpdateAsync(project);
         await _projects.SaveChangesAsync();
+
+        _logger.LogInformation("Updated project {ProjectId}", id);
     }
 
     public async Task DeleteAsync(Guid id)
@@ -77,5 +83,7 @@ public class ProjectService(IProjectRepository projectRepository, IMapper mapper
 
         await _projects.DeleteAsync(id);
         await _projects.SaveChangesAsync();
+
+        _logger.LogInformation("Deleted project {ProjectId} ({ProjectName})", id, project.Name);
     }
 }

@@ -6,6 +6,8 @@ using BetterTests.Domain.Interfaces;
 
 using FluentAssertions;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 using Moq;
 
 using Xunit;
@@ -23,7 +25,7 @@ public class TestResultServiceTests
         _testRunRepositoryMock = new Mock<ITestRunRepository>();
         _testResultRepositoryMock = new Mock<ITestResultRepository>();
 
-        _service = new TestResultService(_testRunRepositoryMock.Object, _testResultRepositoryMock.Object);
+        _service = new TestResultService(_testRunRepositoryMock.Object, _testResultRepositoryMock.Object, NullLogger<TestResultService>.Instance);
     }
 
     [Fact]

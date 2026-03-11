@@ -4,12 +4,15 @@ using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace BetterTests.Application.Services;
 
-public class TestRunService(IProjectRepository projectRepository, ITestRunRepository testRunRepository) : ITestRunService
+public class TestRunService(IProjectRepository projectRepository, ITestRunRepository testRunRepository, ILogger<TestRunService> logger) : ITestRunService
 {
     private readonly IProjectRepository _projects = projectRepository;
     private readonly ITestRunRepository _runs = testRunRepository;
+    private readonly ILogger<TestRunService> _logger = logger;
 
     public async Task<PaginatedResponse<TestRunResponse>> GetByProjectIdAsync(Guid projectId, int page = 1, int pageSize = 20, TestRunStatus? status = null)
     {
@@ -66,6 +69,8 @@ public class TestRunService(IProjectRepository projectRepository, ITestRunReposi
         await _runs.AddAsync(run);
         await _runs.SaveChangesAsync();
 
+        _logger.LogInformation("Created test run {RunId} ({RunName}) in project {ProjectId} by {ExecutedBy}", run.Id, run.Name, projectId, executedBy);
+
         return new TestRunResponse(
             run.Id, run.ProjectId, run.Name, run.Environment, run.ExecutedBy,
             run.StartedAt, run.CompletedAt, run.Status
@@ -89,6 +94,8 @@ public class TestRunService(IProjectRepository projectRepository, ITestRunReposi
 
         await _runs.UpdateAsync(run);
         await _runs.SaveChangesAsync();
+
+        _logger.LogInformation("Updated test run {RunId} in project {ProjectId}", id, projectId);
     }
 
     public async Task DeleteAsync(Guid projectId, Guid id)
@@ -102,5 +109,7 @@ public class TestRunService(IProjectRepository projectRepository, ITestRunReposi
 
         await _runs.DeleteAsync(id);
         await _runs.SaveChangesAsync();
+
+        _logger.LogInformation("Deleted test run {RunId} ({RunName}) from project {ProjectId}", id, run.Name, projectId);
     }
 }

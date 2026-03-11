@@ -8,6 +8,8 @@ using BetterTests.Domain.Interfaces;
 
 using FluentAssertions;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 using Moq;
 
 using Xunit;
@@ -25,7 +27,7 @@ public class ProjectServiceTests
         _projectRepositoryMock = new Mock<IProjectRepository>();
         _mapperMock = new Mock<IMapper>();
 
-        _service = new ProjectService(_projectRepositoryMock.Object, _mapperMock.Object);
+        _service = new ProjectService(_projectRepositoryMock.Object, _mapperMock.Object, NullLogger<ProjectService>.Instance);
     }
 
     [Fact]

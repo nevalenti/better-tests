@@ -6,6 +6,8 @@ using BetterTests.Domain.Interfaces;
 
 using FluentAssertions;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 using Moq;
 
 using Xunit;
@@ -23,7 +25,7 @@ public class TestCaseStepServiceTests
         _testCaseRepositoryMock = new Mock<ITestCaseRepository>();
         _testCaseStepRepositoryMock = new Mock<ITestCaseStepRepository>();
 
-        _service = new TestCaseStepService(_testCaseRepositoryMock.Object, _testCaseStepRepositoryMock.Object);
+        _service = new TestCaseStepService(_testCaseRepositoryMock.Object, _testCaseStepRepositoryMock.Object, NullLogger<TestCaseStepService>.Instance);
     }
 
     [Fact]

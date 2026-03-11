@@ -4,12 +4,15 @@ using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace BetterTests.Application.Services;
 
-public class TestCaseStepService(ITestCaseRepository testCaseRepository, ITestCaseStepRepository testCaseStepRepository) : ITestCaseStepService
+public class TestCaseStepService(ITestCaseRepository testCaseRepository, ITestCaseStepRepository testCaseStepRepository, ILogger<TestCaseStepService> logger) : ITestCaseStepService
 {
     private readonly ITestCaseRepository _cases = testCaseRepository;
     private readonly ITestCaseStepRepository _steps = testCaseStepRepository;
+    private readonly ILogger<TestCaseStepService> _logger = logger;
 
     public async Task<PaginatedResponse<TestCaseStepResponse>> GetByCaseIdAsync(Guid caseId, int page = 1, int pageSize = 20)
     {
@@ -61,6 +64,8 @@ public class TestCaseStepService(ITestCaseRepository testCaseRepository, ITestCa
         await _steps.AddAsync(step);
         await _steps.SaveChangesAsync();
 
+        _logger.LogInformation("Created step {StepId} (order {StepOrder}) for case {CaseId}", step.Id, step.StepOrder, caseId);
+
         return new TestCaseStepResponse(
             step.Id, step.TestCaseId, step.StepOrder, step.Action, step.ExpectedResult
         );
@@ -81,6 +86,8 @@ public class TestCaseStepService(ITestCaseRepository testCaseRepository, ITestCa
 
         await _steps.UpdateAsync(step);
         await _steps.SaveChangesAsync();
+
+        _logger.LogInformation("Updated step {StepId} for case {CaseId}", id, caseId);
     }
 
     public async Task DeleteAsync(Guid caseId, Guid id)
@@ -94,5 +101,7 @@ public class TestCaseStepService(ITestCaseRepository testCaseRepository, ITestCa
 
         await _steps.DeleteAsync(id);
         await _steps.SaveChangesAsync();
+
+        _logger.LogInformation("Deleted step {StepId} from case {CaseId}", id, caseId);
     }
 }

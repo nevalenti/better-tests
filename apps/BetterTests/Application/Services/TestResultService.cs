@@ -4,12 +4,15 @@ using BetterTests.Domain.Entities;
 using BetterTests.Domain.Exceptions;
 using BetterTests.Domain.Interfaces;
 
+using Microsoft.Extensions.Logging;
+
 namespace BetterTests.Application.Services;
 
-public class TestResultService(ITestRunRepository testRunRepository, ITestResultRepository testResultRepository) : ITestResultService
+public class TestResultService(ITestRunRepository testRunRepository, ITestResultRepository testResultRepository, ILogger<TestResultService> logger) : ITestResultService
 {
     private readonly ITestRunRepository _runs = testRunRepository;
     private readonly ITestResultRepository _results = testResultRepository;
+    private readonly ILogger<TestResultService> _logger = logger;
 
     public async Task<PaginatedResponse<TestResultResponse>> GetByRunIdAsync(Guid runId, int page = 1, int pageSize = 20)
     {
@@ -66,6 +69,8 @@ public class TestResultService(ITestRunRepository testRunRepository, ITestResult
         await _results.AddAsync(testResult);
         await _results.SaveChangesAsync();
 
+        _logger.LogInformation("Created test result {ResultId} for case {CaseId} in run {RunId} by {ExecutedBy}", testResult.Id, testResult.TestCaseId, runId, executedBy);
+
         return new TestResultResponse(
             testResult.Id, testResult.TestRunId, testResult.TestCaseId, testResult.Result,
             testResult.Comments, testResult.DefectLink, testResult.ExecutedAt, testResult.ExecutedBy
@@ -87,6 +92,8 @@ public class TestResultService(ITestRunRepository testRunRepository, ITestResult
 
         await _results.UpdateAsync(testResult);
         await _results.SaveChangesAsync();
+
+        _logger.LogInformation("Updated test result {ResultId} in run {RunId}", id, runId);
     }
 
     public async Task DeleteAsync(Guid runId, Guid id)
@@ -100,5 +107,7 @@ public class TestResultService(ITestRunRepository testRunRepository, ITestResult
 
         await _results.DeleteAsync(id);
         await _results.SaveChangesAsync();
+
+        _logger.LogInformation("Deleted test result {ResultId} from run {RunId}", id, runId);
     }
 }
