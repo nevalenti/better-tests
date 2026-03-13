@@ -45,6 +45,14 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>
             services.AddDbContext<AppDbContext>(options =>
                 options.UseInMemoryDatabase(_databaseName).EnableSensitiveDataLogging());
 
+            var healthUiDescriptors = services
+                .Where(d =>
+                    (d.ServiceType.FullName?.Contains("HealthChecks.UI") == true) ||
+                    (d.ImplementationType?.FullName?.Contains("HealthChecks.UI") == true))
+                .ToList();
+            foreach (var descriptor in healthUiDescriptors)
+                services.Remove(descriptor);
+
             var authzDescriptors = services
                 .Where(d => d.ServiceType.Name.Contains("Authorization"))
                 .ToList();

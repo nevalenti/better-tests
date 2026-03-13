@@ -3,9 +3,11 @@ using Asp.Versioning;
 using BetterTests.Application.Mappings;
 using BetterTests.Infrastructure.HealthChecks;
 
-using FluentValidation.AspNetCore;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 using Microsoft.AspNetCore.RateLimiting;
+
+using MicroElements.AspNetCore.OpenApi.FluentValidation;
 
 namespace BetterTests.Api.Extensions;
 
@@ -41,7 +43,11 @@ public static class ServiceConfiguration
             options.SubstituteApiVersionInUrl = true;
         });
 
-        services.AddOpenApi();
+        services.AddFluentValidationRulesToOpenApi();
+        services.AddOpenApi("v1", options =>
+        {
+            options.AddFluentValidationRules();
+        });
 
         var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
         services.AddCors(options =>
@@ -70,8 +76,7 @@ public static class ServiceConfiguration
 
         services
             .AddApplicationServices()
-            .AddFluentValidationAutoValidation()
-            .AddFluentValidationClientsideAdapters();
+            .AddFluentValidationAutoValidation();
 
         services
             .AddControllers()
@@ -90,6 +95,15 @@ public static class ServiceConfiguration
                 "Database", tags: ["ready"])
             .AddCheck<KeycloakHealthCheck>(
                 "Keycloak", tags: ["ready"]);
+
+        services
+            .AddHealthChecksUI(setup =>
+            {
+                setup.SetEvaluationTimeInSeconds(30);
+                setup.MaximumHistoryEntriesPerEndpoint(50);
+                setup.AddHealthCheckEndpoint("BetterTests API", "/healthz");
+            })
+            .AddInMemoryStorage();
 
         return services;
     }

@@ -34,7 +34,13 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Process" />
     <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" />
-    <PackageReference Include="FluentValidation.AspNetCore" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Mvc" />
+    <PackageReference Include="MicroElements.AspNetCore.OpenApi.FluentValidation" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" />
+    <PackageReference Include="KubernetesClient" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
   </ItemGroup>
